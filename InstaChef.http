@@ -1,0 +1,6 @@
+@InstaChef_HostAddress = http://localhost:5286
+
+GET {{InstaChef_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
