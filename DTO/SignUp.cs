@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 
 namespace InstaChef.DTO
 {
@@ -15,7 +16,7 @@ namespace InstaChef.DTO
         //public string LastName { get; set; }
 
         [Required]
-        [MaxLength(50)]
+        //[MaxLength(50)]
         public string Username { get; set; }
 
         [Required]
@@ -23,6 +24,7 @@ namespace InstaChef.DTO
         public string Email { get; set; }
 
         [Required]
+        [PasswordPropertyText]
         //might be useful
         //[MinLength(8, ErrorMessage = "Password must be at least 8 characters long.")]
         public string Password { get; set; }

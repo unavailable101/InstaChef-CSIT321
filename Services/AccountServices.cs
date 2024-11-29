@@ -36,7 +36,7 @@ namespace InstaChef.Services
         public string LoginAccount(Login account)
         {
             var currAccount = _accountRepository.GetAccountByUsername(account.Username);
-            if (currAccount == null) return null;
+            if (currAccount == null || currAccount.Status == 0) return null;
             if ( !VerifyPassword(account.Password, currAccount.Password) ) return null;
             return currAccount.Username;
         }

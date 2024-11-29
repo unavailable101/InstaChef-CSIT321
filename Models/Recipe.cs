@@ -7,6 +7,11 @@ namespace InstaChef.Models
         public int Id { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
+        public string CuisineType { get; set; } //American, Italian, Filipino, Korean, diha ra taman, ayna dungagi
+        public string MealType { get; set; } // Breakfast, Lunch, Dinner, Snacks
+        public string CookingDifficulty { get; set; } // Beginner, Intermediate, Difficult
+        public int PreparationTime { get; set; } //should be in minutes
+        public int ServingCount { get; set; }
         public int IngredientsId { get; set; }
         
         [ForeignKey("IngredientsId")]

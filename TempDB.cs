@@ -13,7 +13,8 @@ namespace InstaChef
                 LastName = "Catubig",
                 Username = "cuteko",
                 Email = "marga18nins@gmail.com",
-                Password = "testing"
+                Password = "testing",
+                Status = 1
             },
             new Account
             {
@@ -22,7 +23,8 @@ namespace InstaChef
                 LastName = "Chavez",
                 Username = "benedict",
                 Email = "francischavez@gmail.com",
-                Password = "testing2"
+                Password = "testing2",
+                Status = 1
             },
             new Account
             {
@@ -31,7 +33,8 @@ namespace InstaChef
                 LastName = "Abellana",
                 Username = "thomas",
                 Email = "paulabellana@gmail.com",
-                Password = "testing3"
+                Password = "testing3",
+                Status = 1
             },
             new Account
             {
@@ -40,7 +43,8 @@ namespace InstaChef
                 LastName = "Bien",
                 Username = "bien",
                 Email = "morielbien@gmail.com",
-                Password = "testing4"
+                Password = "testing4",
+                Status = 1
             }
         };
     }
