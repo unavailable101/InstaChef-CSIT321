@@ -4,8 +4,8 @@ namespace InstaChef.Models
 {
     public class Recipe
     {
-        //public int Id { get; set; }
-        public Guid Id { get; set; }
+        public int Id { get; set; }
+        //public Guid Id { get; set; }
         public required string Name { get; set; }
         public required string Preparation { get; set; }
         public required string CuisineType { get; set; } //American, Italian, Filipino, Korean, diha ra taman, ayna dungagi

@@ -4,9 +4,9 @@ namespace InstaChef.Models
 {
     public class RecipeIngredient
     {
-        //public int Id { get; set; }
+        public int Id { get; set; }
 
-        public Guid Id { get; set; }
+        //public Guid Id { get; set; }
         public int RecipeId { get; set; }
         [ForeignKey("RecipeId")]
         public required Recipe Recipe { get; set; }

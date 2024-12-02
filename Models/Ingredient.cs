@@ -2,8 +2,8 @@
 {
     public class Ingredient
     {
-        //public int Id { get; set; }
-        public Guid Id { get; set; }
+        public int Id { get; set; }
+        //public Guid Id { get; set; }
         public required string Name { get; set; }
         public string? Quantity { get; set; } // eg 1 cup ganern
 
