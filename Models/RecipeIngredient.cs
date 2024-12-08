@@ -1,18 +1,21 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace InstaChef.Models
 {
     public class RecipeIngredient
     {
         public int Id { get; set; }
-
         //public Guid Id { get; set; }
         public int RecipeId { get; set; }
         [ForeignKey("RecipeId")]
-        public required Recipe Recipe { get; set; }
+        public Recipe? Recipe { get; set; }
 
         public int IngredientId { get; set; }
         [ForeignKey("IngredientId")]
-        public required Ingredient Ingredient { get; set; }
+        public Ingredient? Ingredient { get; set; }
+        
+        public double Quantity { get; set; }
+        public string? Unit { get; set; }
     }
 }

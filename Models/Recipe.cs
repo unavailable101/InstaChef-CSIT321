@@ -17,10 +17,10 @@ namespace InstaChef.Models
 
         //[ForeignKey("IngredientsId")]
         //public Ingredient Ingredients { get; set; } //lahi na model for the ingredients, foreign key ni sha
-        public required ICollection<RecipeIngredient> RecipeIngredients { get; set; }
+        public ICollection<RecipeIngredient>? RecipeIngredients { get; set; }
         public int CreatorId { get; set; }
         
         [ForeignKey("CreatorId")]
-        public required Account Creator { get; set; } //foreign key, base sa kng kinsa na user ang nag create sa recipe
+        public Account? Creator { get; set; } //foreign key, base sa kng kinsa na user ang nag create sa recipe
     }
 }

@@ -4,15 +4,20 @@ namespace InstaChef.Repository
 {
     public class AccountRepository : IAccountRepository
     {
+        private readonly InstaChefDbContext _context;   
+        public AccountRepository(InstaChefDbContext context)
+        {
+            _context = context;
+        }
         public void ChangeStatus(string currentAccount)
         {
-            var existingAccount = TempDB.tempAccountList.SingleOrDefault(x => x.Username == currentAccount);
+            var existingAccount = _context.Account.SingleOrDefault(x => x.Username == currentAccount);
             if (existingAccount.Status == 1) existingAccount.Status = 0;
             else existingAccount.Status = 1;
         }
         public void UpdateAccount(string username, string FirstName, string LastName, string Email, string hashPass)
         {
-            var existingAccount = TempDB.tempAccountList.SingleOrDefault(x => x.Username == username);
+            var existingAccount = _context.Account.SingleOrDefault(x => x.Username == username);
 
             if (FirstName != null) existingAccount.FirstName = FirstName;
             if (LastName != null) existingAccount.LastName = LastName;
@@ -23,7 +28,7 @@ namespace InstaChef.Repository
         //public void AddAccount(string firstName, string lastName, string username, string email, string password, int status)
         public void AddAccount(string username, string email, string password, int status)
         {
-            int id = TempDB.tempAccountList.Max(x => x.Id) + 1;
+            int id = _context.Account.Max(x => x.Id) + 1;
             Account newAccount = new Account()
             {
                 Id = id,
@@ -31,19 +36,20 @@ namespace InstaChef.Repository
                 //LastName = lastName,
                 Username = username,
                 Email = email,
-                Password = password
+                Password = password,
+                Status = 1
             };
             TempDB.tempAccountList.Add(newAccount);
         }
         
         public Account? GetAccountByEmail(string email)
         {
-            return TempDB.tempAccountList.SingleOrDefault(x => x.Email == email);
+            return _context.Account.SingleOrDefault(x => x.Email == email);
         }
 
         public Account? GetAccountByUsername(string username)
         {
-            return TempDB.tempAccountList.SingleOrDefault(x => x.Username == username);
+            return _context.Account.SingleOrDefault(x => x.Username == username);
         }
 
 

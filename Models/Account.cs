@@ -23,6 +23,7 @@ namespace InstaChef.Models
 
         //dire lng ni
         //public ICollection<Recipe> Recipes { get; set; }
+        public ICollection<Pantry> Pantries{ get; set; }
 
     }
 }
