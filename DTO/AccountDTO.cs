@@ -5,6 +5,7 @@ namespace InstaChef.DTO
 
     public class AccountDTO
     {
+        // !!! I'll not use this class !!!
 
         public string FirstName { get; set; }
 

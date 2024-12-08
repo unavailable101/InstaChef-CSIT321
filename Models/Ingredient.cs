@@ -10,6 +10,6 @@
 
         //later ko ni gamiton, i think
         //public ICollection<Recipe> Recipes { get; set; }
-        public ICollection<RecipeIngredient>? RecipeIngredients { get; set; }
+        public ICollection<RecipeIngredient> RecipeIngredients { get; set; } = new List<RecipeIngredient>();
     }
 }

@@ -6,6 +6,8 @@ namespace InstaChef.Repository
 {
     public interface IAccountRepository
     {
+        // !!! I'll not use this class !!!
+
         //public void AddAccount(string firstName, string lastName, string username, string email, string password, int status);
         public void AddAccount(string username, string email, string password, int status);
         public Account? GetAccountByEmail(string  email);

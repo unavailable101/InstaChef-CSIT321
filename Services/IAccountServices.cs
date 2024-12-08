@@ -9,7 +9,7 @@ namespace InstaChef.Services
         public string LoginAccount(Login account);
         //public AccountDTO? LoginAccount(Login account);
         public bool AccountExist(string username);
-        public void EditProfile(string username, EditAccount account);
+        public void EditProfile(string username, EditProfile account);
         public void DeactivateAccount(string currentAccount);
 
         //public List<AccountDTO> GetAccounts();

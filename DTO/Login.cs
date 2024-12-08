@@ -5,11 +5,9 @@ namespace InstaChef.DTO
 {
     public class Login
     {
-        [Required]
-        public string Username { get; set; }
+        public required string Username { get; set; }
 
-        [Required]
         [PasswordPropertyText]
-        public string Password { get; set; }
+        public required string Password { get; set; }
     }
 }

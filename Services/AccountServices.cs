@@ -6,25 +6,26 @@ namespace InstaChef.Services
 {
     public class AccountServices : IAccountServices
     {
-        private readonly IAccountRepository _accountRepository;
+        //private readonly IAccountRepository _accountRepository;
+        private readonly IDataRepository _dataRepository;
 
-        public AccountServices(IAccountRepository accountRepository)
+        public AccountServices(IDataRepository dataRepository)
         {
-            _accountRepository = accountRepository;
+            _dataRepository = dataRepository;
         }
 
         public void DeactivateAccount(string currentAccount)
         {
-            _accountRepository.ChangeStatus(currentAccount);
+            _dataRepository.ChangeStatus(currentAccount);
         }
 
         public bool AccountExist(string username)
         {
-            return _accountRepository.GetAccountByUsername(username) != null ? true : false;
+            return _dataRepository.GetAccountByUsername(username) != null ? true : false;
         }
-        public void EditProfile(string username, EditAccount account)
+        public void EditProfile(string username, EditProfile account)
         {
-            _accountRepository.UpdateAccount(
+            _dataRepository.UpdateAccount(
                     username, 
                     account.FirstName, 
                     account.LastName, 
@@ -35,7 +36,7 @@ namespace InstaChef.Services
 
         public string LoginAccount(Login account)
         {
-            var currAccount = _accountRepository.GetAccountByUsername(account.Username);
+            var currAccount = _dataRepository.GetAccountByUsername(account.Username);
             if (currAccount == null || currAccount.Status == 0) return null;
             if ( !VerifyPassword(account.Password, currAccount.Password) ) return null;
             return currAccount.Username;
@@ -46,8 +47,8 @@ namespace InstaChef.Services
         {
             // unique username and email address
             if (
-                _accountRepository.GetAccountByUsername(account.Username) != null ||
-                _accountRepository.GetAccountByEmail(account.Email) != null)
+                _dataRepository.GetAccountByUsername(account.Username) != null ||
+                _dataRepository.GetAccountByEmail(account.Email) != null)
                 return null;
 
             //might use later, for hashing of passwords
@@ -63,7 +64,7 @@ namespace InstaChef.Services
             //    Status = 1
             //};
 
-            _accountRepository.AddAccount(
+            _dataRepository.AddAccount(
                     //account.FirstName,
                     //account.LastName,
                     account.Username,

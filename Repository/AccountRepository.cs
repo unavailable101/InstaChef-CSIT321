@@ -4,6 +4,8 @@ namespace InstaChef.Repository
 {
     public class AccountRepository : IAccountRepository
     {
+        // !!! I'll not use this class !!!
+
         private readonly InstaChefDbContext _context;   
         public AccountRepository(InstaChefDbContext context)
         {

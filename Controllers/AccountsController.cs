@@ -6,6 +6,8 @@ using System.Security.Principal;
 
 namespace InstaChef.Controllers
 {
+    // !!! I'll not use this class !!!
+
     [ApiController]
     [Route("/api")]
     //[Route("/api/accounts")]
@@ -49,7 +51,7 @@ namespace InstaChef.Controllers
 
         [HttpPut]
         [Route("edit-profile")]
-        public IActionResult EditProfile(string currentAccount, EditAccount account) 
+        public IActionResult EditProfile(string currentAccount, EditProfile account) 
         {
             if ( !_accountServices.AccountExist(currentAccount) ) return NotFound();
             _accountServices.EditProfile(currentAccount, account);
