@@ -30,10 +30,10 @@ namespace InstaChef.Repository
 
         public void AddAccount(string username, string email, string password, int status)
         {
-            int id = _context.Account.Max(x => x.Id) + 1;
+            //int id = _context.Account.Max(x => x.Id) + 1;
             Account newAccount = new Account()
             {
-                Id = id,
+                //Id = id,
                 Username = username,
                 Email = email,
                 Password = password,
@@ -131,6 +131,16 @@ namespace InstaChef.Repository
 
             return query.ToList();
             throw new NotImplementedException();
+        }
+
+        public Ingredient? GetIngredient(string name)
+        {
+            return _context.Ingredient.SingleOrDefault(ci => ci.Name == name);
+        }
+
+        public List<Ingredient> GetAllIngredients() 
+        {
+            return _context.Ingredient.ToList();
         }
     }
 }

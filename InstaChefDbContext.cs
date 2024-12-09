@@ -19,7 +19,21 @@ namespace InstaChef
         // ayy basta oi
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            //base.OnModelCreating(modelBuilder);
+            modelBuilder.Entity<Account>()
+            .Property(ri => ri.Id)
+            .ValueGeneratedOnAdd(); 
+            
+            modelBuilder.Entity<Recipe>()
+            .Property(ri => ri.Id)
+            .ValueGeneratedOnAdd(); 
+
+            modelBuilder.Entity<RecipeIngredient>()
+            .Property(ri => ri.Id)
+            .ValueGeneratedOnAdd(); 
+
+
+            base.OnModelCreating(modelBuilder);
+ 
             modelBuilder.Entity<Account>().HasData(
                 new Account
                 {

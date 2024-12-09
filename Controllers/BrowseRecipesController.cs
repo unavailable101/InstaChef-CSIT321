@@ -1,53 +1,67 @@
-﻿using Microsoft.AspNetCore.Components.Forms;
+﻿using InstaChef.Services;
+using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.AspNetCore.Mvc;
 
 namespace InstaChef.Controllers
 {
+    [ApiController]
+    [Route("home/")]
     public class BrowseRecipesController : ControllerBase
     {
-        private readonly IBrowserFile _browserFile;
+        private readonly IBrowseServices _browseServices;
 
-        public BrowseRecipesController(IBrowserFile browserFile)
+        public BrowseRecipesController(IBrowseServices browseServices)
         {
-            _browserFile = browserFile;
+            _browseServices = browseServices;
         }
 
-        [HttpGet]
+        [HttpGet("trending")]
         public IActionResult TrendingRecipes()
         {
-            return Ok();
+            var trending = _browseServices.GetTrendingRecipes();
+            if ( trending == null) return NoContent();
+            return Ok(trending);
         }
         
-        [HttpGet]
+        [HttpGet("new-recipes")]
         public IActionResult NewRecipes()
         {
-            return Ok();
+            var newRecipes = _browseServices.GetNewRecipes();
+            if (newRecipes == null) return NoContent();
+            return Ok(newRecipes);
         }
 
-        [HttpGet]
+        [HttpGet("popular")]
         public IActionResult PopularRecipes()
         {
-            return Ok();
+            var popular = _browseServices.GetPopularRecipes();
+            if (popular == null) return NoContent();
+            return Ok(popular);
         }
 
-        [HttpGet]
+        [HttpGet("saved-recipe")]
         public IActionResult SavedRecipes()
         {
-            return Ok();
+            var saved= _browseServices.GetSavedRecipes();
+            if (saved == null) return NoContent();
+            return Ok(saved);
         }
 
-        [HttpGet]
+        [HttpGet("liked-recipes")]
         public IActionResult LikedRecipes()
         {
-            return Ok();
+            var like = _browseServices.GetLikedRecipes();
+            if (like == null) return NoContent();
+            return Ok(like);
         }
 
-        [HttpGet]
-        public IActionResult RecipeProfile()
+        [HttpGet("recipe/{name}")]
+        public IActionResult RecipeProfile(int id)
         {
-            return Ok();
+            var recipe = _browseServices.GetRecipeProfile(id);
+            if (recipe == null) return NotFound("Recipe does not exist");   //di ni sha NoContent kay nganu no content mn sha na ig click niya sa recipe kay dapat naa sha, it should exist
+            return Ok(recipe);
         }
-
 
     }
 }

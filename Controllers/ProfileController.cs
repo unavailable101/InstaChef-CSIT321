@@ -4,6 +4,8 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace InstaChef.Controllers
 {
+    [ApiController]
+    [Route("profile/")]
     public class ProfileController : ControllerBase
     {
         private readonly IAccountServices _accountServices;
@@ -12,8 +14,7 @@ namespace InstaChef.Controllers
             _accountServices = accountServices;
         }
 
-        [HttpPut]
-        [Route("edit-profile")]
+        [HttpPut("edit-profile")]
         public IActionResult EditProfile(string currentAccount, EditProfile account)
         {
             if (!_accountServices.AccountExist(currentAccount)) return NotFound();
@@ -21,8 +22,7 @@ namespace InstaChef.Controllers
             return Ok(new { message = "Profile successfully updated" });
         }
 
-        [HttpPut]
-        [Route("deactivate-account")]
+        [HttpPut("deactivate-account")]
         public IActionResult DeactivateAccount(string currentAccount)
         {
             if (!_accountServices.AccountExist(currentAccount)) return NotFound();
@@ -31,22 +31,22 @@ namespace InstaChef.Controllers
         }
 
         [HttpGet]
-        public IActionResult GetProfile() 
+        public IActionResult GetProfile()
         {
             return Ok();
         }
 
-        [HttpGet]
-        public IActionResult SavedRecipes() 
+        [HttpGet("saved-recipes")]
+        public IActionResult SavedRecipes()
         {
             return Ok();
         }
 
-        [HttpGet]
-        public IActionResult MyRecipes() 
+        [HttpGet("my-recipes")]
+        public IActionResult MyRecipes()
         {
             return Ok();
         }
-        
+
     }
 }

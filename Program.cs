@@ -7,17 +7,15 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddTransient<IAccountServices, AccountServices>();
-builder.Services.AddScoped<IAccountRepository, AccountRepository>();
+builder.Services.AddTransient<IBrowseServices, BrowseServices>();
+builder.Services.AddTransient<IRecipeServices, RecipeServices>();
+builder.Services.AddScoped<IDataRepository, DataRepository>();
 
+//builder.Services.AddSingleton(new JwtService("your-secret-key", "your-issuer", "your-audience"));     //later nlng ni
 
-//builder.Services.AddDbContext<InstaChefDbContext>(
-//        db => db.UseSqlServer(builder.Configuration.GetConnectionString("InstaChefDbConnectionString")), ServiceLifetime.Scoped
-//    );
 builder.Services.AddDbContext<InstaChefDbContext>(
         db => db.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")), ServiceLifetime.Scoped
     );
-//builder.Services.AddDbContext<InstaChefDbContext>(options =>
-//options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

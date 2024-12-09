@@ -34,22 +34,23 @@ namespace InstaChef.Services
                 );
         }
 
-        public string LoginAccount(Login account)
+        public int? LoginAccount(Login account)
         {
             var currAccount = _dataRepository.GetAccountByUsername(account.Username);
             if (currAccount == null || currAccount.Status == 0) return null;
             if ( !VerifyPassword(account.Password, currAccount.Password) ) return null;
-            return currAccount.Username;
+            return currAccount.Id;
+            //return currAccount.Username;
         }
 
         //public AccountDTO? CreateAccount(SignUp account) 
-        public string CreateAccount(SignUp account) 
+        public int? CreateAccount(SignUp account) 
         {
             // unique username and email address
             if (
                 _dataRepository.GetAccountByUsername(account.Username) != null ||
                 _dataRepository.GetAccountByEmail(account.Email) != null)
-                return null;
+                return -1;
 
             //might use later, for hashing of passwords
             string hashedPassword = HashPassword(account.Password);
@@ -72,8 +73,9 @@ namespace InstaChef.Services
                     hashedPassword,
                     1
                 );
-
-            return account.Username;
+            var newAccount = _dataRepository.GetAccountByUsername(account.Username);
+            if (newAccount != null) return newAccount.Id;
+            return null;
         }
 
         //later nani kay wa pa nako na add ang BCrypt

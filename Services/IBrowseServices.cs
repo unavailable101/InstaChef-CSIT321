@@ -9,7 +9,7 @@ namespace InstaChef.Services
         public string GetPopularRecipes();
         public string GetSavedRecipes();
         public string GetLikedRecipes();
-        public RecipeDTO? GetRecipeProfile(int id); //Recipe ang return type ani
-        public List<RecipeDTO> GetAllRecipes();
+        public RecipeProfile? GetRecipeProfile(int id); //Recipe ang return type ani
+        public List<RecipeProfile> GetAllRecipes();
     }
 }

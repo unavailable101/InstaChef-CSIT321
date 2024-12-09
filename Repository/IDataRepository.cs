@@ -21,5 +21,10 @@ namespace InstaChef.Repository
         public Recipe? GetRecipeProfile(int Id);   //recipe profile
         public List<Recipe> GetRecipe(string Cuisine, string MealType, string Difficulty, int PreparationTime, int ServingCount, List<Ingredient> ChosenIngredients);    //generating recipe
 
+
+        // Ingredients
+        public Ingredient? GetIngredient(string name);
+        public List<Ingredient> GetAllIngredients();
+
     }
 }

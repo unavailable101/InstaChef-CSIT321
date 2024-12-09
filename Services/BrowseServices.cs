@@ -11,12 +11,13 @@ namespace InstaChef.Services
         {
             _dataRepository = dataRepository;
         }
-        public List<RecipeDTO> GetAllRecipes()
+        public List<RecipeProfile> GetAllRecipes()
         {
             var recipes = _dataRepository.GetAllRecipes();
             return recipes.Select(
-                recipe => new RecipeDTO
+                recipe => new RecipeProfile
                 {
+                    Id = recipe.Id,
                     Name = recipe.Name,
                     Preparation = recipe.Preparation,
                     PreparationTime = recipe.PreparationTime,
@@ -50,11 +51,11 @@ namespace InstaChef.Services
             throw new NotImplementedException();
         }
 
-        public RecipeDTO? GetRecipeProfile(int id)
+        public RecipeProfile? GetRecipeProfile(int id)
         {
             var recipe = _dataRepository.GetRecipeProfile(id);
             if (recipe == null) return null;
-            return new RecipeDTO
+            return new RecipeProfile
             {
                 Name = recipe.Name,
                 Preparation = recipe.Preparation,
