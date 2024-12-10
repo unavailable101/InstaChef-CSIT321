@@ -17,6 +17,8 @@ namespace InstaChef.Repository
             var existingAccount = _context.Account.SingleOrDefault(x => x.Username == currentAccount);
             if (existingAccount.Status == 1) existingAccount.Status = 0;
             else existingAccount.Status = 1;
+
+            _context.SaveChanges();
         }
         public void UpdateAccount(string username, string FirstName, string LastName, string Email, string hashPass)
         {
@@ -26,6 +28,8 @@ namespace InstaChef.Repository
             if (LastName != null) existingAccount.LastName = LastName;
             if (Email != null) existingAccount.Email = Email;
             if (hashPass != null) existingAccount.Password = hashPass;
+            
+            _context.SaveChanges();
         }
 
         public void AddAccount(string username, string email, string password, int status)
@@ -40,6 +44,7 @@ namespace InstaChef.Repository
                 Status = 1
             };
             _context.Account.Add(newAccount);
+            _context.SaveChanges();
         }
 
         // User Profile

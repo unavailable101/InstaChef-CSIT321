@@ -22,7 +22,7 @@ namespace InstaChef.Controllers
             return Ok(new { message = "Profile successfully updated" });
         }
 
-        [HttpPut("deactivate-account")]
+        [HttpDelete("deactivate-account")]  //soft delete ni sha
         public IActionResult DeactivateAccount(string currentAccount)
         {
             if (!_accountServices.AccountExist(currentAccount)) return NotFound();
