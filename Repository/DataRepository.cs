@@ -67,7 +67,6 @@ namespace InstaChef.Repository
             .ThenInclude(ri => ri.Ingredient)
             .Include(r => r.Creator)
             .ToList();
-            throw new NotImplementedException();
         }
         public List<Recipe>? GetAllRecipeOfCurrUser(string currUser)
         {
@@ -76,7 +75,6 @@ namespace InstaChef.Repository
             .ThenInclude(ri => ri.Ingredient)
             .Where(r => r.Creator.Username == currUser) 
             .ToList();
-            throw new NotImplementedException();
         }
 
         // Recipe Profile
@@ -87,7 +85,6 @@ namespace InstaChef.Repository
             .ThenInclude(ri => ri.Ingredient)
             .Include(r => r.Creator)
             .SingleOrDefault(r => r.Id == Id);
-            throw new NotImplementedException();
         }
 
         // Creating and Updating Recipe from Creator
@@ -95,14 +92,12 @@ namespace InstaChef.Repository
         {
             _context.Recipe.Update(recipe);
             _context.SaveChanges();
-            throw new NotImplementedException();
         }
 
         public void AddRecipe(Recipe recipe)
         {
             _context.Recipe.Add(recipe);
             _context.SaveChanges();
-            throw new NotImplementedException();
         }
 
         // Generating Recipe pero lists, si services nay bahalag pili
@@ -135,7 +130,6 @@ namespace InstaChef.Repository
             }
 
             return query.ToList();
-            throw new NotImplementedException();
         }
 
         public Ingredient? GetIngredient(string name)

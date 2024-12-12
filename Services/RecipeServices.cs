@@ -16,6 +16,11 @@ namespace InstaChef.Services
         public bool CreateRecipe(RecipeDTO newRecipe, string username)
         {
             var creator = _dataRepository.GetAccountByUsername(username);
+            if (creator == null)
+            {
+                throw new ArgumentException("Invalid username");
+            }
+
             var recipe = new Recipe
             {
                 Name = newRecipe.Name,
@@ -25,30 +30,33 @@ namespace InstaChef.Services
                 MealType = newRecipe.MealType,
                 CookingDifficulty = newRecipe.CookingDifficulty,
                 ServingCount = newRecipe.ServingCount,
-                CreatorId = creator.Id
+                CreatorId = creator.Id,
+                DateCreated = DateOnly.FromDateTime(DateTime.Now)
             };
 
-            recipe.RecipeIngredients = newRecipe.Ingredients.Select(
-                ingredientDTO =>
+            recipe.RecipeIngredients = newRecipe.Ingredients.Select(ingredientDTO =>
+            {
+                var ingredient = _dataRepository.GetIngredient(ingredientDTO.Name);
+                if (ingredient == null)
                 {
-                    var ingredient = _dataRepository.GetIngredient(ingredientDTO.Name);
-
-                    return new RecipeIngredient
-                    {
-                        RecipeId = recipe.Id,
-                        IngredientId = ingredient.Id,
-                        Quantity = ingredientDTO.Quantity,
-                        Unit = ingredientDTO.Unit
-                    };
+                    // Handle the missing ingredient here
+                    throw new ArgumentException($"Ingredient '{ingredientDTO.Name}' not found in the database");
                 }
-            ).ToList();
+
+                return new RecipeIngredient
+                {
+                    RecipeId = recipe.Id,
+                    IngredientId = ingredient.Id,
+                    Quantity = ingredientDTO.Quantity,
+                    Unit = ingredientDTO.Unit
+                };
+            }).ToList();
 
             _dataRepository.AddRecipe(recipe);
 
             return true;
-            
-            throw new NotImplementedException();
         }
+
 
         public bool EditRecipe(RecipeDTO editRecipe, int id)
         {

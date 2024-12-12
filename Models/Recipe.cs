@@ -22,5 +22,6 @@ namespace InstaChef.Models
         
         [ForeignKey("CreatorId")]
         public Account? Creator { get; set; } //foreign key, base sa kng kinsa na user ang nag create sa recipe
+        public DateOnly DateCreated { get; set; } = DateOnly.FromDateTime(DateTime.UtcNow);
     }
 }

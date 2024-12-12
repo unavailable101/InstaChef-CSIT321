@@ -1,5 +1,6 @@
 ﻿using InstaChef.Models;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace InstaChef
 {
@@ -12,7 +13,6 @@ namespace InstaChef
         public DbSet<Recipe> Recipe { get; set; }
         public DbSet<Ingredient> Ingredient { get; set; }
         public DbSet<RecipeIngredient> RecipeIngredients { get; set; }
-        public DbSet<Pantry> Pantry { get; set; }
 
 
         //temporary data siguro, built-in bha
@@ -29,7 +29,7 @@ namespace InstaChef
 
             modelBuilder.Entity<RecipeIngredient>()
             .Property(ri => ri.Id)
-            .ValueGeneratedOnAdd(); 
+            .ValueGeneratedOnAdd();
 
 
             base.OnModelCreating(modelBuilder);
@@ -659,12 +659,6 @@ namespace InstaChef
                 new RecipeIngredient { Id = 2, RecipeId = 1, IngredientId = 2, Quantity = 0.5, Unit = "cups" },
                 new RecipeIngredient { Id = 3, RecipeId = 1, IngredientId = 3, Quantity = 2, Unit = "pieces" },
                 new RecipeIngredient { Id = 4, RecipeId = 2, IngredientId = 5, Quantity = 4, Unit = "pieces" }
-                );
-            modelBuilder.Entity<Pantry>().HasData(
-                new Pantry { Id = 1, AccountId = 1, IngredientId = 1 },
-                new Pantry { Id = 2, AccountId = 1, IngredientId = 2 },
-                new Pantry { Id = 3, AccountId = 2, IngredientId = 3 },
-                new Pantry { Id = 4, AccountId = 2, IngredientId = 5 }
                 );
         }
     }

@@ -27,7 +27,7 @@ namespace InstaChef.Controllers
         public IActionResult CreateRecipe(RecipeDTO newRecipe, string username)
         {
             if (_recipeServices.CreateRecipe(newRecipe, username))
-                return Ok();
+                return Ok( new { message = "Recipe successfully created." } );
             return BadRequest("Cannot create recipe");
         }
         

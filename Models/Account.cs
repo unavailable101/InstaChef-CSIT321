@@ -15,7 +15,7 @@ namespace InstaChef.Models
         public required int Status{ get; set; } // 1 - active account; 0 - deactivate account
         //dire lng ni
         //public ICollection<Recipe> Recipes { get; set; }
-        public ICollection<Pantry> Pantries{ get; set; }
+        //public ICollection<Pantry> Pantries{ get; set; }
 
     }
 }
