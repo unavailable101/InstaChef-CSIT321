@@ -1,4 +1,4 @@
-﻿using InstaChef.Models;
+using InstaChef.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Migrations;
 
@@ -13,7 +13,7 @@ namespace InstaChef
         public DbSet<Recipe> Recipe { get; set; }
         public DbSet<Ingredient> Ingredient { get; set; }
         public DbSet<RecipeIngredient> RecipeIngredients { get; set; }
-
+        public DbSet<ChefRecipes> ChefRecipes { get; set;}
 
         //temporary data siguro, built-in bha
         // ayy basta oi
@@ -31,6 +31,9 @@ namespace InstaChef
             .Property(ri => ri.Id)
             .ValueGeneratedOnAdd();
 
+            modelBuilder.Entity<ChefRecipes>()
+            .Property(ri => ri.Id)
+            .ValueGeneratedOnAdd();
 
             base.OnModelCreating(modelBuilder);
  
@@ -102,6 +105,35 @@ namespace InstaChef
                     CreatorId = 2
                 }
                 );
+            modelBuilder.Entity<ChefRecipes>().HasData(
+                new ChefRecipes
+                {
+                    Id = 1,
+                    Name = "Pancakes",
+                    Description = "Classic fluffy pancakes perfect for breakfast.",
+                    Preparation = "Mix ingredients and cook on a skillet until golden brown.",
+                    CuisineType = "American",
+                    MealType = "Breakfast",
+                    CookingDifficulty = "Beginner",
+                    PreparationTime = 20,
+                    ServingCount = 4,
+                    Category = 1 // Trending
+                },
+                new ChefRecipes
+                {
+                    Id = 2,
+                    Name = "Spaghetti Carbonara",
+                    Description = "Creamy Italian pasta with pancetta and Parmesan.",
+                    Preparation = "Cook pasta and toss with eggs, cheese, and pancetta.",
+                    CuisineType = "Italian",
+                    MealType = "Dinner",
+                    CookingDifficulty = "Intermediate",
+                    PreparationTime = 30,
+                    ServingCount = 2,
+                    Category = 2 // Popular
+                }
+                // Add more recipes here, based on the data from the CSV file
+            );
             //modelBuilder.Entity<Ingredient>().HasData(
             //    new Ingredient { Id = 1, Name = "Flour", Category = "Baking" },
             //    new Ingredient { Id = 2, Name = "Sugar", Category = "Baking" },
@@ -660,6 +692,8 @@ namespace InstaChef
                 new RecipeIngredient { Id = 3, RecipeId = 1, IngredientId = 3, Quantity = 2, Unit = "pieces" },
                 new RecipeIngredient { Id = 4, RecipeId = 2, IngredientId = 5, Quantity = 4, Unit = "pieces" }
                 );
+
+           
         }
     }
 }

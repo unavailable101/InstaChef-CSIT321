@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace InstaChef.Controllers
 {
     [ApiController]
+    [Route("api/[Controller]")]
     public class AuthController : ControllerBase    // login - sign up class ni sha
     {
         private readonly IAccountServices _accountServices;
