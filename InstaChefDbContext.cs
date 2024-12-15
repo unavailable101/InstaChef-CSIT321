@@ -6,14 +6,15 @@ namespace InstaChef
 {
     public class InstaChefDbContext : DbContext
     {
-        public InstaChefDbContext(DbContextOptions<InstaChefDbContext> options) : base(options) { }
-
         //register tables
-        public DbSet<Account> Account { get; set; }
-        public DbSet<Recipe> Recipe { get; set; }
-        public DbSet<Ingredient> Ingredient { get; set; }
+        public DbSet<Account> Accounts { get; set; }
+        public DbSet<Recipe> Recipes { get; set; }
+        public DbSet<Ingredient> Ingredients { get; set; }
         public DbSet<RecipeIngredient> RecipeIngredients { get; set; }
 
+        //public DbSet<ChefRecipe> ChefRecipes { get; set; }
+
+        public InstaChefDbContext(DbContextOptions<InstaChefDbContext> options) : base(options) { }
 
         //temporary data siguro, built-in bha
         // ayy basta oi
@@ -654,12 +655,12 @@ namespace InstaChef
             );
 
 
-            modelBuilder.Entity<RecipeIngredient>().HasData(
-                new RecipeIngredient { Id = 1, RecipeId = 1, IngredientId = 1, Quantity = 2, Unit = "cups" },
-                new RecipeIngredient { Id = 2, RecipeId = 1, IngredientId = 2, Quantity = 0.5, Unit = "cups" },
-                new RecipeIngredient { Id = 3, RecipeId = 1, IngredientId = 3, Quantity = 2, Unit = "pieces" },
-                new RecipeIngredient { Id = 4, RecipeId = 2, IngredientId = 5, Quantity = 4, Unit = "pieces" }
-                );
+            //modelBuilder.Entity<RecipeIngredient>().HasData(
+            //    new RecipeIngredient { Id = 1, RecipeId = 1, IngredientId = 1, Quantity = 2, Unit = "cups" },
+            //    new RecipeIngredient { Id = 2, RecipeId = 1, IngredientId = 2, Quantity = 0.5, Unit = "cups" },
+            //    new RecipeIngredient { Id = 3, RecipeId = 1, IngredientId = 3, Quantity = 2, Unit = "pieces" },
+            //    new RecipeIngredient { Id = 4, RecipeId = 2, IngredientId = 5, Quantity = 4, Unit = "pieces" }
+            //    );
         }
     }
 }

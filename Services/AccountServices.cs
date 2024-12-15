@@ -37,58 +37,99 @@ namespace InstaChef.Services
         public int? LoginAccount(Login account)
         {
             var currAccount = _dataRepository.GetAccountByUsername(account.Username);
-            if (currAccount == null || currAccount.Status == 0) return null;
-            if ( !VerifyPassword(account.Password, currAccount.Password) ) return null;
+            if (currAccount == null || currAccount.Status == 0)
+            {
+                // Account does not exist or is deactivated
+                return null;
+            }
+
+            // Verify the password
+            if (!VerifyPassword(account.Password, currAccount.Password))
+            {
+                // Password mismatch
+                return null;
+            }
+
+            // Return the account ID upon successful login
             return currAccount.Id;
-            //return currAccount.Username;
         }
 
-        //public AccountDTO? CreateAccount(SignUp account) 
-        public int? CreateAccount(SignUp account) 
-        {
-            // unique username and email address
-            if (
-                _dataRepository.GetAccountByUsername(account.Username) != null ||
-                _dataRepository.GetAccountByEmail(account.Email) != null)
-                return -1;
+        //public int? LoginAccount(Login account)
+        //{
+        //    var currAccount = _dataRepository.GetAccountByUsername(account.Username);
+        //    if (currAccount == null || currAccount.Status == 0) return null;
+        //    if ( !VerifyPassword(account.Password, currAccount.Password) ) return null;
+        //    return currAccount.Id;
+        //    //return currAccount.Username;
+        //}
 
-            //might use later, for hashing of passwords
+        //public AccountDTO? CreateAccount(SignUp account) 
+        //public int? CreateAccount(SignUp account) 
+        //{
+        //    // unique username and email address
+        //    if (
+        //        _dataRepository.GetAccountByUsername(account.Username) != null ||
+        //        _dataRepository.GetAccountByEmail(account.Email) != null)
+        //        return -1;
+
+        //    //might use later, for hashing of passwords
+        //    string hashedPassword = HashPassword(account.Password);
+
+        //    //var newAccount = new AccountDTO()
+        //    //{
+        //    //    FirstName = account.FirstName,
+        //    //    LastName = account.LastName,
+        //    //    Username = account.Username,
+        //    //    Email = account.Email,
+        //    //    Password = hashedPassword,
+        //    //    Status = 1
+        //    //};
+
+        //    _dataRepository.AddAccount(
+        //            //account.FirstName,
+        //            //account.LastName,
+        //            account.Username,
+        //            account.Email,
+        //            hashedPassword,
+        //            1
+        //        );
+        //    var newAccount = _dataRepository.GetAccountByUsername(account.Username);
+        //    if (newAccount != null) return newAccount.Id;
+        //    return null;
+        //}
+
+        public int? CreateAccount(SignUp account)
+        {
+            if (_dataRepository.GetAccountByUsername(account.Username) != null ||
+                _dataRepository.GetAccountByEmail(account.Email) != null)
+            {
+                return -1;
+            }
+
             string hashedPassword = HashPassword(account.Password);
 
-            //var newAccount = new AccountDTO()
-            //{
-            //    FirstName = account.FirstName,
-            //    LastName = account.LastName,
-            //    Username = account.Username,
-            //    Email = account.Email,
-            //    Password = hashedPassword,
-            //    Status = 1
-            //};
-
             _dataRepository.AddAccount(
-                    //account.FirstName,
-                    //account.LastName,
-                    account.Username,
-                    account.Email,
-                    hashedPassword,
-                    1
-                );
+                account.Username,
+                account.Email,
+                hashedPassword,
+                1 // Active status
+            );
+
             var newAccount = _dataRepository.GetAccountByUsername(account.Username);
-            if (newAccount != null) return newAccount.Id;
-            return null;
+            return newAccount?.Id;
         }
 
         //later nani kay wa pa nako na add ang BCrypt
         private string HashPassword(string password)
         {
-            //return BCrypt.Net.BCrypt.HashPassword(password);
-            return "testing";
+            return BCrypt.Net.BCrypt.HashPassword(password);
+            //return "testing";
         }
 
-        private bool VerifyPassword(string rawPassword, string HashedPassword) 
+        private bool VerifyPassword(string rawPassword, string hashedPassword) 
         {
-            //return BCrypt.Net.BCrypt.Verify(plainPassword, hashedPassword);
-            return rawPassword == HashedPassword;
+            return BCrypt.Net.BCrypt.Verify(rawPassword, hashedPassword);
+            //return rawPassword == HashedPassword;
         }
 
 

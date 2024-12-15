@@ -24,6 +24,7 @@ namespace InstaChef.Services
             var recipe = new Recipe
             {
                 Name = newRecipe.Name,
+                //StringIngredients = newRecipe.StringIngredients,
                 Preparation = newRecipe.Preparation,
                 PreparationTime = newRecipe.PreparationTime,
                 CuisineType = newRecipe.CuisineType,

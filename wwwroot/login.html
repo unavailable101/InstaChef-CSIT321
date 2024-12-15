@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>InstaChef Login</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="flex items-center justify-center min-h-screen bg-white relative overflow-hidden">
+    <!-- Decorative Circles -->
+    <div class="absolute w-96 h-96 bg-green-200 rounded-full -bottom-44 -left-44"></div>
+    <div class="absolute w-96 h-96 bg-green-200 rounded-full -top-44 -right-44"></div>
+
+    <div class="container mx-auto flex items-center justify-between w-11/12 max-w-screen-lg">
+        <!-- Logo -->
+        <div class="text-center">
+            <img src="images/logo.png" alt="Logo" class="w-80 mx-auto">
+        </div>
+
+        <!-- Content -->
+        <div class="max-w-md bg-white p-8 rounded-lg shadow-lg">
+            <h2 class="text-2xl font-bold text-black mb-2">Welcome home cooks!</h2>
+            <p class="text-gray-600 mb-4">Login to your Account</p>
+
+            <form id="login-form" action="#" method="POST">
+                <div class="mb-4">
+                    <label for="username" class="block font-medium mb-1">User name</label>
+                    <input type="text" id="username" placeholder="Enter your user name" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500">
+                </div>
+
+                <div class="mb-4">
+                    <label for="password" class="block font-medium mb-1">Password</label>
+                    <input type="password" id="password" placeholder="Enter your Password" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500">
+                </div>
+
+                <div class="flex items-center justify-between mb-6 text-sm">
+                    <label class="flex items-center">
+                        <input type="checkbox" class="mr-2"> Remember me
+                    </label>
+                    <a href="#" class="text-green-600 hover:underline">Forgot Password?</a>
+                </div>
+
+                <button type="button" id="loginSubmit" class="w-full bg-green-600 text-white py-2 px-4 rounded-lg hover:bg-green-700">Login</button>
+                </>
+
+                <p class="text-center mt-4">Don’t have an Account? <a href="signup.html" class="text-green-600 hover:underline">Register</a></p>
+
+                <div class="text-center mt-6" id="login-error">
+
+                </div>
+
+                <!-- WALA PANI NA TIWAS / TODO -->
+                <p class="text-center mt-4">Continue as <a href="#" class="text-green-600 hover:underline">guest</a></p>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('loginSubmit').addEventListener('click', function (e) {
+            // Collect form data
+            const requestData = {
+                username: document.getElementById('username').value,
+                password: document.getElementById('password').value,
+            };
+
+            console.log('Sending data:', requestData);
+
+            fetch('/api/Auth/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json', // Set content type to JSON
+                },
+                body: JSON.stringify(requestData) // Send data as JSON string
+            })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Failed to register');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    if (data.message) {
+                        // On successful registration, redirect to login
+                        window.location.href = 'home.html';
+                    } else {
+                        // Show error message
+                        document.getElementById('signup-error').innerHTML = data.message || 'An error occurred';
+                    }
+                })
+                .catch(error => {
+                    // Show error if something went wrong
+                    document.getElementById('signup-error').innerHTML = error.message || 'An error occurred';
+                    console.error('Error:', error);
+                });
+        });
+    </script>
+
+</body>
+</html>

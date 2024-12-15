@@ -14,7 +14,7 @@ namespace InstaChef.Repository
         // Accounts
         public void ChangeStatus(string currentAccount)
         {
-            var existingAccount = _context.Account.SingleOrDefault(x => x.Username == currentAccount);
+            var existingAccount = _context.Accounts.SingleOrDefault(x => x.Username == currentAccount);
             if (existingAccount.Status == 1) existingAccount.Status = 0;
             else existingAccount.Status = 1;
 
@@ -22,7 +22,7 @@ namespace InstaChef.Repository
         }
         public void UpdateAccount(string username, string FirstName, string LastName, string Email, string hashPass)
         {
-            var existingAccount = _context.Account.SingleOrDefault(x => x.Username == username);
+            var existingAccount = _context.Accounts.SingleOrDefault(x => x.Username == username);
 
             if (FirstName != null) existingAccount.FirstName = FirstName;
             if (LastName != null) existingAccount.LastName = LastName;
@@ -43,26 +43,26 @@ namespace InstaChef.Repository
                 Password = password,
                 Status = 1
             };
-            _context.Account.Add(newAccount);
+            _context.Accounts.Add(newAccount);
             _context.SaveChanges();
         }
 
         // User Profile
         public Account? GetAccountByEmail(string email)
         {
-            return _context.Account.SingleOrDefault(x => x.Email == email);
+            return _context.Accounts.SingleOrDefault(x => x.Email == email);
         }
 
         public Account? GetAccountByUsername(string username)
         {
-            return _context.Account.SingleOrDefault(x => x.Username == username);
+            return _context.Accounts.SingleOrDefault(x => x.Username == username);
         }
 
 
         // Browse Recipes
         public List<Recipe>? GetAllRecipes()
         {
-            return _context.Recipe
+            return _context.Recipes
             .Include(r => r.RecipeIngredients) 
             .ThenInclude(ri => ri.Ingredient)
             .Include(r => r.Creator)
@@ -70,7 +70,7 @@ namespace InstaChef.Repository
         }
         public List<Recipe>? GetAllRecipeOfCurrUser(string currUser)
         {
-            return _context.Recipe
+            return _context.Recipes
             .Include(r => r.RecipeIngredients)
             .ThenInclude(ri => ri.Ingredient)
             .Where(r => r.Creator.Username == currUser) 
@@ -80,7 +80,7 @@ namespace InstaChef.Repository
         // Recipe Profile
         public Recipe? GetRecipeProfile(int Id)
         {
-            return _context.Recipe
+            return _context.Recipes
             .Include(r => r.RecipeIngredients)
             .ThenInclude(ri => ri.Ingredient)
             .Include(r => r.Creator)
@@ -90,20 +90,20 @@ namespace InstaChef.Repository
         // Creating and Updating Recipe from Creator
         public void UpdateRecipe(Recipe recipe)
         {
-            _context.Recipe.Update(recipe);
+            _context.Recipes.Update(recipe);
             _context.SaveChanges();
         }
 
         public void AddRecipe(Recipe recipe)
         {
-            _context.Recipe.Add(recipe);
+            _context.Recipes.Add(recipe);
             _context.SaveChanges();
         }
 
         // Generating Recipe pero lists, si services nay bahalag pili
         public List<Recipe> GetRecipe(string cuisine, string mealType, string difficulty, int preparationTime, int servingCount, List<Ingredient> chosenIngredients)
         {
-            var query = _context.Recipe
+            var query = _context.Recipes
             .Include(r => r.RecipeIngredients)
             .ThenInclude(ri => ri.Ingredient)
             .AsQueryable();
@@ -134,12 +134,12 @@ namespace InstaChef.Repository
 
         public Ingredient? GetIngredient(string name)
         {
-            return _context.Ingredient.SingleOrDefault(ci => ci.Name == name);
+            return _context.Ingredients.SingleOrDefault(ci => ci.Name == name);
         }
 
         public List<Ingredient> GetAllIngredients() 
         {
-            return _context.Ingredient.ToList();
+            return _context.Ingredients.ToList();
         }
     }
 }

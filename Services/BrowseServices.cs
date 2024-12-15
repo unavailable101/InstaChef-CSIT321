@@ -81,7 +81,29 @@ namespace InstaChef.Services
 
         public string GetTrendingRecipes()  //unya nako ani
         {
-            throw new NotImplementedException();
+            return null;
+            //    var trendingRecipes = _dataRepository.GetAllRecipes()
+            //        .Where(recipe => recipe.Category == "Trending") // Filter by Category
+            //        .Select(recipe => new RecipeProfile
+            //        {
+            //            Id = recipe.Id,
+            //            Name = recipe.Name,
+            //            Preparation = recipe.Preparation,
+            //            PreparationTime = recipe.PreparationTime,
+            //            Ingredients = recipe.RecipeIngredients.Select(
+            //                ri => new IngredientDTO
+            //                {
+            //                    Name = ri.Ingredient.Name,
+            //                    Category = ri.Ingredient.Category,
+            //                    Quantity = ri.Quantity,
+            //                    Unit = ri.Unit
+            //                }
+            //            ).ToList(),
+            //            ChefUsername = recipe.Creator.Username
+            //        })
+            //        .ToList();
+
+            //    return trendingRecipes;
         }
     }
 }

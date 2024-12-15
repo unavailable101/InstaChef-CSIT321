@@ -13,13 +13,13 @@ namespace InstaChef.Repository
         }
         public void ChangeStatus(string currentAccount)
         {
-            var existingAccount = _context.Account.SingleOrDefault(x => x.Username == currentAccount);
+            var existingAccount = _context.Accounts.SingleOrDefault(x => x.Username == currentAccount);
             if (existingAccount.Status == 1) existingAccount.Status = 0;
             else existingAccount.Status = 1;
         }
         public void UpdateAccount(string username, string FirstName, string LastName, string Email, string hashPass)
         {
-            var existingAccount = _context.Account.SingleOrDefault(x => x.Username == username);
+            var existingAccount = _context.Accounts.SingleOrDefault(x => x.Username == username);
 
             if (FirstName != null) existingAccount.FirstName = FirstName;
             if (LastName != null) existingAccount.LastName = LastName;
@@ -30,7 +30,7 @@ namespace InstaChef.Repository
         //public void AddAccount(string firstName, string lastName, string username, string email, string password, int status)
         public void AddAccount(string username, string email, string password, int status)
         {
-            int id = _context.Account.Max(x => x.Id) + 1;
+            int id = _context.Accounts.Max(x => x.Id) + 1;
             Account newAccount = new Account()
             {
                 Id = id,
@@ -46,12 +46,12 @@ namespace InstaChef.Repository
         
         public Account? GetAccountByEmail(string email)
         {
-            return _context.Account.SingleOrDefault(x => x.Email == email);
+            return _context.Accounts.SingleOrDefault(x => x.Email == email);
         }
 
         public Account? GetAccountByUsername(string username)
         {
-            return _context.Account.SingleOrDefault(x => x.Username == username);
+            return _context.Accounts.SingleOrDefault(x => x.Username == username);
         }
 
 

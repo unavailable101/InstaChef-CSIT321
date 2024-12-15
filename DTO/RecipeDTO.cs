@@ -5,6 +5,7 @@ namespace InstaChef.DTO
     public class RecipeDTO  //para ni sa edit and create recipe
     {
         public required string Name { get; set; }
+        //public required string StringIngredients { get; set; }
         public required string Preparation { get; set; }
         public required string CuisineType { get; set; } //American, Italian, Filipino, Korean, diha ra taman, ayna dungagi
         public required string MealType { get; set; } // Breakfast, Lunch, Dinner, Snacks

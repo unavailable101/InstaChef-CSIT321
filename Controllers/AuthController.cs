@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace InstaChef.Controllers
 {
     [ApiController]
+    [Route("api/[controller]")]
     public class AuthController : ControllerBase    // login - sign up class ni sha
     {
         private readonly IAccountServices _accountServices;
@@ -13,22 +14,36 @@ namespace InstaChef.Controllers
             _accountServices = accountServices;
         }
 
+        // [HttpPost("signup")]
+        // public IActionResult CreateAccount(SignUp newAccount)
+        // {
+        //     //string result = _accountServices.CreateAccount(newAccount);
+        //     int? user = _accountServices.CreateAccount(newAccount);
+        //     if (user == -1)
+        //         return Conflict("User already exists.");
+            
+        //     if (user == null)
+        //         return BadRequest("Failed to create an account");
+        //     //var token = _jwtService.GenerateToken(user);    //later nani, kapoy setup ani
+
+        //     return Ok(new {message = "Account created successfully.", session = user}); 
+        //     //return CreatedAtRoute("getAccountById", new { username = result }, result); //ha? mao ni ang problem! this cause error 500
+        //     // asa man ning getAccountById oi TTOTT
+        //     // the problem is it wont save to the database once mag create kog account
+        // }
+
         [HttpPost("signup")]
         public IActionResult CreateAccount(SignUp newAccount)
         {
-            //string result = _accountServices.CreateAccount(newAccount);
             int? user = _accountServices.CreateAccount(newAccount);
-            if (user == -1)
-                return Conflict("User already exists.");
             
-            if (user == null)
-                return BadRequest("Failed to create an account");
-            //var token = _jwtService.GenerateToken(user);    //later nani, kapoy setup ani
+            if (user == -1)
+                return Conflict(new { message = "User already exists." });
 
-            return Ok(new {message = "Account created successfully.", session = user}); 
-            //return CreatedAtRoute("getAccountById", new { username = result }, result); //ha? mao ni ang problem! this cause error 500
-            // asa man ning getAccountById oi TTOTT
-            // the problem is it wont save to the database once mag create kog account
+            if (user == null)
+                return BadRequest(new { message = "Failed to create an account." });
+
+            return Ok(new { message = "Account created successfully.", session = user });
         }
 
         [HttpPost("login")]

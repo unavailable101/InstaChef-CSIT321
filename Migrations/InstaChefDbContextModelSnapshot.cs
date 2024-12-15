@@ -53,7 +53,7 @@ namespace InstaChef.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Account");
+                    b.ToTable("Accounts");
 
                     b.HasData(
                         new
@@ -116,7 +116,7 @@ namespace InstaChef.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Ingredient");
+                    b.ToTable("Ingredients");
 
                     b.HasData(
                         new
@@ -3119,6 +3119,9 @@ namespace InstaChef.Migrations
                     b.Property<DateOnly>("DateCreated")
                         .HasColumnType("date");
 
+                    b.Property<string>("ImageName")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("MealType")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -3141,7 +3144,7 @@ namespace InstaChef.Migrations
 
                     b.HasIndex("CreatorId");
 
-                    b.ToTable("Recipe");
+                    b.ToTable("Recipes");
 
                     b.HasData(
                         new
@@ -3150,7 +3153,7 @@ namespace InstaChef.Migrations
                             CookingDifficulty = "Beginner",
                             CreatorId = 1,
                             CuisineType = "American",
-                            DateCreated = new DateOnly(2024, 12, 11),
+                            DateCreated = new DateOnly(2024, 12, 15),
                             MealType = "Breakfast",
                             Name = "Pancakes",
                             Preparation = "Mix ingredients and cook on a skillet until golden brown.",
@@ -3163,7 +3166,7 @@ namespace InstaChef.Migrations
                             CookingDifficulty = "Intermediate",
                             CreatorId = 2,
                             CuisineType = "Italian",
-                            DateCreated = new DateOnly(2024, 12, 11),
+                            DateCreated = new DateOnly(2024, 12, 15),
                             MealType = "Lunch",
                             Name = "Tomato Soup",
                             Preparation = "Blend tomatoes and simmer with spices.",
@@ -3199,40 +3202,6 @@ namespace InstaChef.Migrations
                     b.HasIndex("RecipeId");
 
                     b.ToTable("RecipeIngredients");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            IngredientId = 1,
-                            Quantity = 2.0,
-                            RecipeId = 1,
-                            Unit = "cups"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            IngredientId = 2,
-                            Quantity = 0.5,
-                            RecipeId = 1,
-                            Unit = "cups"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            IngredientId = 3,
-                            Quantity = 2.0,
-                            RecipeId = 1,
-                            Unit = "pieces"
-                        },
-                        new
-                        {
-                            Id = 4,
-                            IngredientId = 5,
-                            Quantity = 4.0,
-                            RecipeId = 2,
-                            Unit = "pieces"
-                        });
                 });
 
             modelBuilder.Entity("InstaChef.Models.Recipe", b =>
