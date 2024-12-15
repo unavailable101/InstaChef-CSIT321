@@ -91,4 +91,46 @@
     </script>
 
 </body>
+<!-- <script src="js/signup.js"></script> -->
+<script>
+     document.getElementById('registerSubmit').addEventListener('click', function (e) {
+         // Collect form data
+         const requestData = {
+             email: document.getElementById('email').value,
+             username: document.getElementById('username').value,
+             password: document.getElementById('password').value,
+             confirmPassword: document.getElementById('confirm-password').value
+         };
+
+         console.log('Sending data:', requestData);
+
+         fetch('/api/Auth/signup', {
+             method: 'POST',
+             headers: {
+                 'Content-Type': 'application/json', // Set content type to JSON
+             },
+             body: JSON.stringify(requestData) // Send data as JSON string
+         })
+             .then(response => {
+                 if (!response.ok) {
+                     throw new Error('Failed to register');
+                 }
+                 return response.json();
+             })
+             .then(data => {
+                 if (data.message) {
+                     // On successful registration, redirect to login
+                     window.location.href = 'login.html';
+                 } else {
+                     // Show error message
+                     document.getElementById('signup-error').innerHTML = data.message || 'An error occurred';
+                 }
+             })
+             .catch(error => {
+                 // Show error if something went wrong
+                 document.getElementById('signup-error').innerHTML = error.message || 'An error occurred';
+                 console.error('Error:', error);
+             });
+     });
+ </script>
 </html>
