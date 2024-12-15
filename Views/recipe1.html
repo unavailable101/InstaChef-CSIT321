@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>InstaChef Home Screen</title>
+  <link href='https://fonts.googleapis.com/css?family=Poppins' rel='stylesheet'>
+  <link rel="stylesheet" href="styles.css"> 
+  <style>
+    .recipe-container {
+  display: flex;
+  max-width: 1000px;
+  background-color: white;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.recipe-image {
+  flex: 1;
+  background-color: #ddd;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px;
+}
+
+.recipe-image span {
+  font-size: 18px;
+  color: #555;
+}
+
+.recipe-details {
+  flex: 2;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.recipe-details h1 {
+  margin: 0;
+  font-size: 28px;
+  color: #333;
+}
+
+.recipe-details .meta {
+  margin: 10px 0;
+  font-size: 14px;
+  color: #666;
+}
+
+.recipe-details .meta span {
+  margin-right: 20px;
+}
+
+.recipe-details .ingredients,
+.recipe-details .preparation {
+  margin-top: 20px;
+}
+
+.recipe-details .ingredients ul {
+  list-style: disc;
+  margin: 10px 0 0 20px;
+  padding: 0;
+}
+
+.recipe-details .preparation p {
+  margin: 10px 0;
+  line-height: 1.6;
+  color: #555;
+}
+
+    
+  </style>
+</head>
+<body>
+  <!-- Navigation Bar -->
+  <nav>
+    <div class="logo"><img src="images/instachef-h-logo.png" alt="Logo" style="padding-top: 5px;padding-left: 10px;height:fit-content;width:80%;"></div>
+    <ul>
+      <li><a href="home.html">Home</a></li>
+      <li><a href="recipe.html">Recipes</a></li>
+      <li><a href="generaterecipe.html">Generate Recipes</a></li>
+      <li><a href="aboutus.html">About Us</a></li>
+      <li><a href="contact.html">Contact Us</a></li>
+    </ul>
+    <a href="profile.html" class="profile-btn">Profile</a>
+  </nav>
+  <center>
+    <h1>User Profile</h1>
+  </center>
+  <body>
+    <div class="recipe-container">
+        <div class="recipe-image">
+            <span>Placeholder for Image</span>
+        </div>
+        <div class="recipe-details">
+            <h1>Fried Chicken</h1>
+            <div class="meta">
+                <span>🕒 45 Minutes</span>
+                <span>🔥 375 Cal</span>
+            </div>
+            <div class="ingredients">
+                <h2>Ingredients</h2>
+                <ul>
+                    <li>Chicken breast</li>
+                    <li>Chili Powder (optional)</li>
+                    <li>Margarine</li>
+                    <li>Soy Sauce</li>
+                </ul>
+            </div>
+            <div class="preparation">
+                <h2>Preparation</h2>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+            </div>
+        </div>
+    </div>
+  <!-- Footer -->
+  <footer>
+    <div class="footer-container">
+      <div class="footer-logo">
+        <img src="images/footerlogo.png" alt="InstaChef Logo">
+      </div>
+      <div class="footer-group">
+        <h3>Group</h3>
+        <ul>
+          <li><a href="#">About Us</a></li>
+          <li><a href="#">Contact Us</a></li>
+        </ul>
+      </div>
+      <div class="footer-contact">
+        <h3>Contact Info</h3>
+        <ul>
+          <li>Phone: 1234567890</li>
+          <li>Email: instachef@email.com</li>
+          <li>Location: Cebu IT Park</li>
+        </ul>
+      </div>
+    </div>
+  </footer>
+  
+</body>
+</html>

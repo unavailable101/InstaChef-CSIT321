@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Recipe Grid</title>
+  <link href='https://fonts.googleapis.com/css?family=Poppins' rel='stylesheet'>
+
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <!-- Header -->
+  <nav>
+    <div class="logo"><img src="images/instachef-h-logo.png" alt="Logo" style="padding-top: 5px;padding-left: 10px;height:fit-content;width:80%;"></div>
+    <ul>
+      <li><a href="home.html">Home</a></li>
+      <li><a href="recipe.html">Recipes</a></li>
+      <li><a href="generaterecipe.html">Generate Recipes</a></li>
+      <li><a href="aboutus.html">About Us</a></li>
+      <li><a href="contact.html">Contact Us</a></li>
+    </ul>
+    <a href="profile.html" class="profile-btn">Profile</a>
+  </nav>
+ <!-- Categories -->
+ <section class="category-container">
+  <h2>Category</h2>
+  <div class="category-buttons">
+    <button class="active" data-category="trending">Trending</button>
+    <button data-category="new">New</button>
+    <button data-category="popular">Popular</button>
+    <button data-category="recommended">Recommended</button>
+    <button data-category="saved">Saved Recipes</button>
+    <button data-category="liked">Liked Recipes</button>
+  </div>
+</section>
+
+<!-- Recipes -->
+<section class="recipe-container">
+  <div class="recipe-grid" data-category="trending">
+    <!-- Trending Recipes -->
+    <div class="recipe-card">
+      <a href="home.html">
+        <img src="images/recipe/recipe1.png" alt="Recipe Image">
+      </a>
+      <div class="recipe-info">
+        <h3>Buttered Garlic Chicken</h3>
+        <p>By Chef A</p>
+      </div>
+    </div>
+      <!-- Single Recipe Card -->
+      <div class="recipe-card">
+        <a href="home.html">
+          <img src="images/recipe/recipe2.png" alt="Recipe Image">
+        </a>
+        <div class="recipe-info">
+          <h3>Fried Chicken</h3>
+          <p>By Siren</p>
+          <div class="recipe-meta">
+            <span>220 <i class="heart-icon">♥</i></span>
+            <i class="save-icon">🔖</i>
+          </div>
+        </div>
+      </div>
+      <!-- Duplicate for other recipes -->
+      <div class="recipe-card">
+        <a href="home.html">
+          <img src="images/recipe/recipe3.png" alt="Recipe Image">
+        </a>        
+        <div class="recipe-info">
+          <h3>Chili Meatball</h3>
+          <p>By Zid</p>
+          <div class="recipe-meta">
+            <span>102 <i class="heart-icon">♥</i></span>
+            <i class="save-icon">🔖</i>
+          </div>
+        </div>
+      </div>
+      <!-- Add more cards -->
+  </div>
+
+  <div class="recipe-grid hidden" data-category="new">
+    <!-- New Recipes -->
+    <div class="recipe-card">
+      <a href="home.html">
+        <img src="images/recipe/recipe1.png" alt="Recipe Image">
+      </a>
+      <div class="recipe-info">
+        <h3>New Recipe</h3>
+        <p>By Chef B</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="recipe-grid hidden" data-category="popular">
+    <!-- Popular Recipes -->
+    <div class="recipe-card">
+      <a href="home.html">
+        <img src="images/recipe/recipe2.png" alt="Recipe Image">
+      </a>      
+      <div class="recipe-info">
+        <h3>Popular Recipe</h3>
+        <p>By Chef C</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="recipe-grid hidden" data-category="recommended">
+    <!-- Recommended Recipes -->
+    <div class="recipe-card">
+      <a href="home.html">
+        <img src="images/recipe/recipe3.png" alt="Recipe Image">
+      </a>      
+      <div class="recipe-info">
+        <h3>Recommended Recipe</h3>
+        <p>By Chef D</p>
+      </div>
+    </div>
+  </div>
+  <div class="recipe-grid hidden" data-category="saved">
+    <!-- Recommended Recipes -->
+    <div class="recipe-card">
+      <a href="home.html">
+        <img src="images/recipe/recipe1.png" alt="Recipe Image">
+      </a>      
+      <div class="recipe-info">
+        <h3>Saved Recipe</h3>
+        <p>By Chef D</p>
+      </div>
+    </div>
+  </div>
+  <div class="recipe-grid hidden" data-category="liked">
+    <!-- Recommended Recipes -->
+    <div class="recipe-card">
+      <a href="home.html">
+        <img src="images/recipe/recipe3.png" alt="Recipe Image">
+      </a>      
+      <div class="recipe-info">
+        <h3>Liked Recipe</h3>
+        <p>By Chef D</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  const buttons = document.querySelectorAll(".category-buttons button");
+  const grids = document.querySelectorAll(".recipe-grid");
+
+  // Function to update visible recipes based on the active category
+  function updateCategory(category) {
+    grids.forEach(grid => {
+      if (grid.dataset.category === category) {
+        grid.classList.remove("hidden");
+      } else {
+        grid.classList.add("hidden");
+      }
+    });
+  }
+
+  // Set default category to 'trending' on page load
+  document.addEventListener("DOMContentLoaded", () => {
+    const defaultCategory = "trending";
+    document.querySelector(`.category-buttons button[data-category="${defaultCategory}"]`).classList.add("active");
+    updateCategory(defaultCategory);
+  });
+
+  // Add click event listeners for category buttons
+  buttons.forEach(button => {
+    button.addEventListener("click", () => {
+      console.log(`Button clicked for category: ${button.dataset.category}`);
+
+      // Update active button
+      buttons.forEach(btn => btn.classList.remove("active"));
+      button.classList.add("active");
+
+      // Show the corresponding recipes
+      const category = button.dataset.category;
+      updateCategory(category);
+    });
+  });
+</script>
+<section class="recipe-container">
+  <button class="generate-btn">Generate Recipe</button>
+
+</section>
+<!-- Footer -->
+<footer>
+  <div class="footer-container">
+    <div class="footer-logo">
+      <img src="images/footerlogo.png" alt="InstaChef Logo">
+    </div>
+    <div class="footer-group">
+      <h3>Group</h3>
+      <ul>
+        <li><a href="#">About Us</a></li>
+        <li><a href="#">Contact Us</a></li>
+      </ul>
+    </div>
+    <div class="footer-contact">
+      <h3>Contact Info</h3>
+      <ul>
+        <li>Phone: 1234567890</li>
+        <li>Email: instachef@email.com</li>
+        <li>Location: Cebu IT Park</li>
+      </ul>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

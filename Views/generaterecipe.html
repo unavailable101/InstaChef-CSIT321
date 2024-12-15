@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Recipe Grid</title>
+  <link href='https://fonts.googleapis.com/css?family=Poppins' rel='stylesheet'>
+  
+  <link rel="stylesheet" href="styles.css">
+  <style>
+      .container2 {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        h2 {
+            text-align: start;
+            margin-bottom: 20px;
+        }
+
+        .section {
+            margin-bottom: 20px;
+        }
+
+        .section-title {
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .button {
+            padding: 10px 20px;
+            border: 2px solid #6FBF4B;
+            border-radius: 20px;
+            background-color: white;
+            color: #6FBF4B;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .button:hover {
+            background-color: #e5f6e4;
+        }
+
+        .button.selected {
+            background-color: #6FBF4B;
+            color: white;
+        }
+
+        .input-group {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .input-group input {
+            width: 50px;
+            padding: 5px;
+            text-align: center;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .available-products {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .product {
+            padding: 8px 15px;
+            border: 2px solid #ccc;
+            border-radius: 20px;
+            background-color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .product:hover {
+            border-color: #6FBF4B;
+        }
+
+        .product.selected {
+            background-color: #6FBF4B;
+            color: white;
+        }
+
+        .generate-btn {
+            display: block;
+            margin: 20px auto;
+            padding: 15px 30px;
+            background-color: #6FBF4B;
+            color: white;
+            border: none;
+            border-radius: 30px;
+            font-size: 18px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .generate-btn:hover {
+            background-color: #5aa43b;
+        }
+
+        .chef-placeholder {
+            text-align: center;
+            margin-top: 30px;
+        }
+
+        .chef-placeholder img {
+            width: 200px;
+            border-radius: 10px;
+        }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <nav>
+    <div class="logo"><img src="images/instachef-h-logo.png" alt="Logo" style="padding-top: 5px;padding-left: 10px;height:fit-content;width:80%;"></div>
+    <ul>
+      <li><a href="home.html">Home</a></li>
+      <li><a href="recipe.html">Recipes</a></li>
+      <li><a href="generaterecipe.html">Generate Recipes</a></li>
+      <li><a href="aboutus.html">About Us</a></li>
+      <li><a href="contact.html">Contact Us</a></li>
+    </ul>
+    <a href="profile.html" class="profile-btn">Profile</a>
+  </nav>
+ <!-- Categories -->
+ <div class="container2">
+  <h2>Recipe Generator</h2>
+
+  <div class="section">
+      <div class="section-title">Cuisines</div>
+      <div class="button-group">
+          <button class="button">Random</button>
+          <button class="button">American</button>
+          <button class="button">Italian</button>
+          <button class="button">Filipino</button>
+          <button class="button">Korean</button>
+      </div>
+  </div>
+
+  <div class="section">
+      <div class="section-title">Meal Type</div>
+      <div class="button-group">
+          <button class="button">Breakfast</button>
+          <button class="button">Lunch</button>
+          <button class="button">Dinner</button>
+          <button class="button">Snacks</button>
+      </div>
+  </div>
+
+  <div class="section">
+      <div class="section-title">Cooking Difficulty</div>
+      <div class="button-group">
+          <button class="button">Beginner</button>
+          <button class="button">Intermediate</button>
+          <button class="button">Difficult</button>
+      </div>
+  </div>
+
+  <div class="section">
+      <div class="section-title">Preparation Time</div>
+      <div class="button-group">
+          <button class="button">10 min</button>
+          <button class="button">20 min</button>
+          <button class="button">30 min</button>
+          <button class="button">1 hour</button>
+          <button class="button">1 hr 30 min</button>
+          <button class="button">1 hr 45 min</button>
+      </div>
+  </div>
+
+  <div class="section">
+      <div class="section-title">Serving Count</div>
+      <div class="button-group">
+          <button class="button">1</button>
+          <button class="button">2</button>
+          <button class="button">3</button>
+          <button class="button">4</button>
+          <button class="button">5</button>
+      </div>
+  </div>
+
+  <div class="section">
+      <div class="section-title">Available Products in Pantry</div>
+      <div class="available-products">
+          <div class="product">Canola Oil</div>
+          <div class="product">Olive Oil</div>
+          <div class="product">Coconut Oil</div>
+          <div class="product">Vinegar</div>
+          <div class="product">Sesame Oil</div>
+          <div class="product">White Rice</div>
+          <div class="product">Chicken Breast</div>
+          <div class="product">Broccoli</div>
+      </div>
+  </div>
+
+  <button class="generate-btn">Generate Recipe</button>
+
+  <div class="chef-placeholder">
+      <img src="https://via.placeholder.com/200" alt="Chef Placeholder">
+  </div>
+</div>
+
+<script>
+  document.querySelectorAll('.button').forEach(button => {
+      button.addEventListener('click', () => {
+          button.classList.toggle('selected');
+      });
+  });
+
+  document.querySelectorAll('.product').forEach(product => {
+      product.addEventListener('click', () => {
+          product.classList.toggle('selected');
+      });
+  });
+</script>
+<!-- Footer -->
+<footer>
+  <div class="footer-container">
+    <div class="footer-logo">
+      <img src="images/footerlogo.png" alt="InstaChef Logo">
+    </div>
+    <div class="footer-group">
+      <h3>Group</h3>
+      <ul>
+        <li><a href="#">About Us</a></li>
+        <li><a href="#">Contact Us</a></li>
+      </ul>
+    </div>
+    <div class="footer-contact">
+      <h3>Contact Info</h3>
+      <ul>
+        <li>Phone: 1234567890</li>
+        <li>Email: instachef@email.com</li>
+        <li>Location: Cebu IT Park</li>
+      </ul>
+    </div>
+  </div>
+</footer>
+</body>
+</html>
