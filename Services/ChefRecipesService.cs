@@ -3,8 +3,13 @@ using InstaChef.Models;
 using InstaChef.Repositories;
 
 namespace InstaChef.Services
+
 {
-    public class ChefRecipesService
+    public interface IChefRecipesService
+    {
+        Task<List<ChefRecipesDTO>> SearchRecipesAsync(string[] keywords, bool matchAllKeywords);
+    }
+    public class ChefRecipesService : IChefRecipesService
     {
         private readonly IChefRecipesRepository _repository;
 
@@ -26,7 +31,8 @@ namespace InstaChef.Services
                 CookingDifficulty = r.CookingDifficulty,
                 PreparationTime = r.PreparationTime,
                 ServingCount = r.ServingCount,
-                Category = r.Category
+                Category = r.Category,
+                ImageName = r.ImageName
             });
         }
         public async Task AddRecipeAsync(ChefRecipesDTO recipeDto)
@@ -41,10 +47,39 @@ namespace InstaChef.Services
                 CookingDifficulty = recipeDto.CookingDifficulty,
                 PreparationTime = recipeDto.PreparationTime,
                 ServingCount = recipeDto.ServingCount,
-                Category = recipeDto.Category
+                Category = recipeDto.Category.GetValueOrDefault(0),
+                ImageName = recipeDto.ImageName
             };
 
             await _repository.AddRecipeAsync(recipe);
+        }
+
+        public async Task<List<ChefRecipesDTO>> SearchRecipesAsync(string[] keywords, bool matchAllKeyword)
+        {
+            // Get the recipes matching the keywords
+            var recipes = await _repository.SearchRecipesAsync(keywords, matchAllKeyword);
+
+            // Convert the results to DTOs
+            var recipesDto = recipes.Select(r => new ChefRecipesDTO
+            {
+                Name = r.Name,
+                Description = r.Description,
+                Preparation = r.Preparation,
+                CuisineType = r.CuisineType,
+                MealType = r.MealType,
+                CookingDifficulty = r.CookingDifficulty,
+                PreparationTime = r.PreparationTime,
+                ServingCount = r.ServingCount,
+                Category = r.Category,
+                ImageName = r.ImageName
+            }).ToList();
+
+            return recipesDto;
+        }
+
+        public async Task<List<ChefRecipes>> GenerateRecipes(string cuisineType, string mealType, string cookingDifficulty, int? preparationTime, string[] keywords)
+        {
+            return await _repository.GenerateRecipes(cuisineType, mealType, cookingDifficulty, preparationTime, keywords);
         }
     }
 }

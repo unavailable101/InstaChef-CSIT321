@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace InstaChef.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialCreate : Migration
+    public partial class initial : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -29,6 +29,28 @@ namespace InstaChef.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Accounts", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ChefRecipes",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Preparation = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CuisineType = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    MealType = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CookingDifficulty = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    PreparationTime = table.Column<int>(type: "int", nullable: false),
+                    ServingCount = table.Column<int>(type: "int", nullable: false),
+                    Category = table.Column<int>(type: "int", nullable: false),
+                    ImageName = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ChefRecipes", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -110,6 +132,15 @@ namespace InstaChef.Migrations
                     { 2, "francischavez@gmail.com", "Francis Benedict", "Chavez", "testing2", 1, "benedict" },
                     { 3, "paulabellana@gmail.com", "Paul Thomas", "Abellana", "testing3", 1, "thomas" },
                     { 4, "morielbien@gmail.com", "Moriel", "Bien", "testing4", 1, "bien" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "ChefRecipes",
+                columns: new[] { "Id", "Category", "CookingDifficulty", "CuisineType", "Description", "ImageName", "MealType", "Name", "Preparation", "PreparationTime", "ServingCount" },
+                values: new object[,]
+                {
+                    { 50000, 1, "Beginner", "American", "Classic fluffy pancakes perfect for breakfast.", "-pancakes-", "Breakfast", "Pancakes", "Mix ingredients and cook on a skillet until golden brown.", 20, 4 },
+                    { 50001, 2, "Intermediate", "Italian", "Creamy Italian pasta with pancetta and Parmesan.", "-spaghetti-carbonara-", "Dinner", "Spaghetti Carbonara", "Cook pasta and toss with eggs, cheese, and pancetta.", 30, 2 }
                 });
 
             migrationBuilder.InsertData(
@@ -624,6 +655,17 @@ namespace InstaChef.Migrations
                     { 2, "Intermediate", 2, "Italian", new DateOnly(2024, 12, 15), null, "Lunch", "Tomato Soup", "Blend tomatoes and simmer with spices.", 30, 3 }
                 });
 
+            migrationBuilder.InsertData(
+                table: "RecipeIngredients",
+                columns: new[] { "Id", "IngredientId", "Quantity", "RecipeId", "Unit" },
+                values: new object[,]
+                {
+                    { 1, 1, 2.0, 1, "cups" },
+                    { 2, 2, 0.5, 1, "cups" },
+                    { 3, 3, 2.0, 1, "pieces" },
+                    { 4, 5, 4.0, 2, "pieces" }
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_RecipeIngredients_IngredientId",
                 table: "RecipeIngredients",
@@ -643,6 +685,9 @@ namespace InstaChef.Migrations
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "ChefRecipes");
+
             migrationBuilder.DropTable(
                 name: "RecipeIngredients");
 

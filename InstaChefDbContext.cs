@@ -6,6 +6,10 @@ namespace InstaChef
 {
     public class InstaChefDbContext : DbContext
     {
+        public InstaChefDbContext(DbContextOptions<InstaChefDbContext> options)
+        : base(options)
+        {
+        }
         //register tables
         public DbSet<Account> Accounts { get; set; }
         public DbSet<Recipe> Recipes { get; set; }
@@ -106,7 +110,7 @@ namespace InstaChef
             modelBuilder.Entity<ChefRecipes>().HasData(
                 new ChefRecipes
                 {
-                    Id = 1,
+                    Id = 50000,
                     Name = "Pancakes",
                     Description = "Classic fluffy pancakes perfect for breakfast.",
                     Preparation = "Mix ingredients and cook on a skillet until golden brown.",
@@ -115,11 +119,12 @@ namespace InstaChef
                     CookingDifficulty = "Beginner",
                     PreparationTime = 20,
                     ServingCount = 4,
-                    Category = 1 // Trending
+                    Category = 1,
+                    ImageName = "-pancakes-"
                 },
                 new ChefRecipes
                 {
-                    Id = 2,
+                    Id = 50001,
                     Name = "Spaghetti Carbonara",
                     Description = "Creamy Italian pasta with pancetta and Parmesan.",
                     Preparation = "Cook pasta and toss with eggs, cheese, and pancetta.",
@@ -128,7 +133,8 @@ namespace InstaChef
                     CookingDifficulty = "Intermediate",
                     PreparationTime = 30,
                     ServingCount = 2,
-                    Category = 2 // Popular
+                    Category = 2,
+                    ImageName = "-spaghetti-carbonara-"
                 }
                 // Add more recipes here, based on the data from the CSV file
             );

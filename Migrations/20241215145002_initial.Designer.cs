@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace InstaChef.Migrations
 {
     [DbContext(typeof(InstaChefDbContext))]
-    [Migration("20241215080025_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20241215145002_initial")]
+    partial class initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -98,6 +98,86 @@ namespace InstaChef.Migrations
                             Password = "testing4",
                             Status = 1,
                             Username = "bien"
+                        });
+                });
+
+            modelBuilder.Entity("InstaChef.Models.ChefRecipes", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("Category")
+                        .HasColumnType("int");
+
+                    b.Property<string>("CookingDifficulty")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CuisineType")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ImageName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("MealType")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Preparation")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("PreparationTime")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ServingCount")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("ChefRecipes");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 50000,
+                            Category = 1,
+                            CookingDifficulty = "Beginner",
+                            CuisineType = "American",
+                            Description = "Classic fluffy pancakes perfect for breakfast.",
+                            ImageName = "-pancakes-",
+                            MealType = "Breakfast",
+                            Name = "Pancakes",
+                            Preparation = "Mix ingredients and cook on a skillet until golden brown.",
+                            PreparationTime = 20,
+                            ServingCount = 4
+                        },
+                        new
+                        {
+                            Id = 50001,
+                            Category = 2,
+                            CookingDifficulty = "Intermediate",
+                            CuisineType = "Italian",
+                            Description = "Creamy Italian pasta with pancetta and Parmesan.",
+                            ImageName = "-spaghetti-carbonara-",
+                            MealType = "Dinner",
+                            Name = "Spaghetti Carbonara",
+                            Preparation = "Cook pasta and toss with eggs, cheese, and pancetta.",
+                            PreparationTime = 30,
+                            ServingCount = 2
                         });
                 });
 
@@ -3205,6 +3285,40 @@ namespace InstaChef.Migrations
                     b.HasIndex("RecipeId");
 
                     b.ToTable("RecipeIngredients");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            IngredientId = 1,
+                            Quantity = 2.0,
+                            RecipeId = 1,
+                            Unit = "cups"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            IngredientId = 2,
+                            Quantity = 0.5,
+                            RecipeId = 1,
+                            Unit = "cups"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            IngredientId = 3,
+                            Quantity = 2.0,
+                            RecipeId = 1,
+                            Unit = "pieces"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            IngredientId = 5,
+                            Quantity = 4.0,
+                            RecipeId = 2,
+                            Unit = "pieces"
+                        });
                 });
 
             modelBuilder.Entity("InstaChef.Models.Recipe", b =>

@@ -2,6 +2,7 @@ using InstaChef.Repository;
 using InstaChef.Services;
 using InstaChef;
 using Microsoft.EntityFrameworkCore;
+using InstaChef.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -10,6 +11,14 @@ builder.Services.AddTransient<IAccountServices, AccountServices>();
 builder.Services.AddTransient<IBrowseServices, BrowseServices>();
 builder.Services.AddTransient<IRecipeServices, RecipeServices>();
 builder.Services.AddScoped<IDataRepository, DataRepository>();
+
+// Added this
+builder.Services.AddControllersWithViews();
+builder.Services.AddTransient<ChefRecipesService>();
+builder.Services.AddTransient<IChefRecipesRepository, ChefRecipesRepository>();
+
+//builder.Services.AddScoped<IChefRecipesRepository, ChefRecipesRepository>();
+//builder.Services.AddScoped<IChefRecipesService, ChefRecipesService>();
 
 //builder.Services.AddSingleton(new JwtService("your-secret-key", "your-issuer", "your-audience"));     //later nlng ni
 

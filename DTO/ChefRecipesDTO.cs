@@ -13,6 +13,7 @@ namespace InstaChef.DTO
         public required string CookingDifficulty { get; set; }
         public required int PreparationTime { get; set; }
         public required int ServingCount { get; set; }
-        public required int Category { get; set; }
+        public int? Category { get; set; }
+        public required string ImageName { get; set; }
     }
 }
