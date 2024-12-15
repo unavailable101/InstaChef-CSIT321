@@ -1,4 +1,5 @@
 using InstaChef.DTO;
+using InstaChef.Models;
 using InstaChef.Services;
 using Microsoft.AspNetCore.Mvc;
 
@@ -66,5 +67,23 @@ namespace InstaChef.Controllers
             }
         }
 
+        [HttpGet("Category")]
+        public async Task<ActionResult<IEnumerable<ChefRecipes>>> GetRecipesByCategory()
+        {
+            try
+            {
+                var recipes = await _service.GetRecipesByCategoryAsync();
+                if (recipes == null || !recipes.Any())
+                {
+                    return NotFound("No recipes found for the specified categories.");
+                }
+
+                return Ok(recipes);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, "Internal server error: " + ex.Message);
+            }
+        }
     }
 }

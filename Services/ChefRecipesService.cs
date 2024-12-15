@@ -81,5 +81,10 @@ namespace InstaChef.Services
         {
             return await _repository.GenerateRecipes(cuisineType, mealType, cookingDifficulty, preparationTime, keywords);
         }
+
+        public async Task<IEnumerable<ChefRecipes>> GetRecipesByCategoryAsync()
+        {
+            return await _repository.GetRecipesByCategoryAsync();
+        }
     }
 }

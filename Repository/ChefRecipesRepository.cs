@@ -73,7 +73,7 @@ namespace InstaChef.Repositories
         {
             var query = _context.ChefRecipes.AsQueryable();
 
-            // Filter by CuisineType with Random selection
+            // Filter Random Cuisine
             if (!string.IsNullOrEmpty(cuisineType))
             {
                 if (cuisineType.ToLower() == "random")
@@ -84,25 +84,25 @@ namespace InstaChef.Repositories
                 query = query.Where(r => r.CuisineType == cuisineType);
             }
 
-            // Filter by MealType
+            // Filter MealType
             if (!string.IsNullOrEmpty(mealType))
             {
                 query = query.Where(r => r.MealType == mealType);
             }
 
-            // Filter by CookingDifficulty
+            // Filter CookingDifficulty
             if (!string.IsNullOrEmpty(cookingDifficulty))
             {
                 query = query.Where(r => r.CookingDifficulty == cookingDifficulty);
             }
 
-            // Filter by PreparationTime
+            // Filter PreparationTime
             if (preparationTime.HasValue)
             {
                 query = query.Where(r => r.PreparationTime <= preparationTime);
             }
 
-            // Filter by Keywords in Description
+            // Filter Keywords in Description
             if (keywords != null && keywords.Any())
             {
                 foreach (var keyword in keywords)
@@ -113,6 +113,25 @@ namespace InstaChef.Repositories
             }
 
             return await query.ToListAsync();
+        }
+
+        // Recipes by category
+        public async Task<IEnumerable<ChefRecipes>> GetRecipesByCategoryAsync()
+        {
+            var categories = new[] { 1, 2, 3, 4, 5 };
+            var recipes = new List<ChefRecipes>();
+
+            foreach (var category in categories)
+            {
+                var categoryRecipes = await _context.ChefRecipes
+                    .Where(r => r.Category == category)
+                    .Take(3)
+                    .ToListAsync();
+
+                recipes.AddRange(categoryRecipes);
+            }
+
+            return recipes;
         }
     }
 }

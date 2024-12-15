@@ -10,8 +10,8 @@ namespace InstaChef.Repositories
         Task AddRecipeAsync(ChefRecipes recipe);
         Task UpdateRecipeAsync(ChefRecipes recipe);
         Task DeleteRecipeAsync(int id);
-
         Task<List<ChefRecipes>> SearchRecipesAsync(string[] keywords, bool matchAllKeywords);
         Task<List<ChefRecipes>> GenerateRecipes(string cuisineType, string mealType, string cookingDifficulty, int? preparationTime, string[] keywords);
+        Task<IEnumerable<ChefRecipes>> GetRecipesByCategoryAsync();
     }
 }
