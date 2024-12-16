@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Recipe Grid</title>
+  <title>Recipes</title>
   <link href='https://fonts.googleapis.com/css?family=Poppins' rel='stylesheet'>
 
   <link rel="stylesheet" href="styles.css">
@@ -38,7 +38,7 @@
 <section class="recipe-container">
   <div class="recipe-grid" data-category="trending">
     <!-- Trending Recipes -->
-    <div class="recipe-card">
+    <!--<div class="recipe-card">
       <a href="recipe1.html">
         <img src="images/recipe/recipe1.png" alt="Recipe Image">
       </a>
@@ -46,9 +46,9 @@
         <h3>Buttered Garlic Chicken</h3>
         <p>By Chef A</p>
       </div>
-    </div>
+    </div>-->
       <!-- Single Recipe Card -->
-      <div class="recipe-card">
+      <!--<div class="recipe-card">
         <a href="recipe1.html">
           <img src="images/recipe/recipe2.png" alt="Recipe Image">
         </a>
@@ -60,9 +60,9 @@
             <i class="save-icon">🔖</i>
           </div>
         </div>
-      </div>
+      </div>-->
       <!-- Duplicate for other recipes -->
-      <div class="recipe-card">
+      <!--<div class="recipe-card">
         <a href="recipe1.html">
           <img src="images/recipe/recipe3.png" alt="Recipe Image">
         </a>        
@@ -74,13 +74,13 @@
             <i class="save-icon">🔖</i>
           </div>
         </div>
-      </div>
+      </div>-->
       <!-- Add more cards -->
   </div>
 
   <div class="recipe-grid hidden" data-category="new">
     <!-- New Recipes -->
-    <div class="recipe-card">
+    <!--<div class="recipe-card">
       <a href="home.html">
         <img src="images/recipe/recipe1.png" alt="Recipe Image">
       </a>
@@ -88,12 +88,12 @@
         <h3>New Recipe</h3>
         <p>By Chef B</p>
       </div>
-    </div>
+    </div>-->
   </div>
 
   <div class="recipe-grid hidden" data-category="popular">
     <!-- Popular Recipes -->
-    <div class="recipe-card">
+    <!--<div class="recipe-card">
       <a href="home.html">
         <img src="images/recipe/recipe2.png" alt="Recipe Image">
       </a>      
@@ -101,12 +101,12 @@
         <h3>Popular Recipe</h3>
         <p>By Chef C</p>
       </div>
-    </div>
+    </div>-->
   </div>
 
   <div class="recipe-grid hidden" data-category="recommended">
     <!-- Recommended Recipes -->
-    <div class="recipe-card">
+    <!--<div class="recipe-card">
       <a href="home.html">
         <img src="images/recipe/recipe3.png" alt="Recipe Image">
       </a>      
@@ -114,11 +114,11 @@
         <h3>Recommended Recipe</h3>
         <p>By Chef D</p>
       </div>
-    </div>
+    </div>-->
   </div>
   <div class="recipe-grid hidden" data-category="saved">
     <!-- Recommended Recipes -->
-    <div class="recipe-card">
+    <!--<div class="recipe-card">
       <a href="home.html">
         <img src="images/recipe/recipe1.png" alt="Recipe Image">
       </a>      
@@ -126,7 +126,7 @@
         <h3>Saved Recipe</h3>
         <p>By Chef D</p>
       </div>
-    </div>
+    </div>-->
   </div>
   <div class="recipe-grid hidden" data-category="liked">
     <!-- Recommended Recipes -->
@@ -180,9 +180,123 @@
   });
 </script>
 <section class="recipe-container">
-  <button class="generate-btn">Generate Recipe</button>
+    <a href="generaterecipe.html"><button class="generate-btn">Generate Recipe</button></a>
 
 </section>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", async () => {
+            try {
+                console.log('Starting data fetch...');
+
+                const response = await fetch('/api/ChefRecipes/Category'); // Replace with your actual endpoint
+                console.log('Fetch response received:', response);
+
+                if (!response.ok) {
+                    throw new Error(`Failed to fetch data: ${response.status} ${response.statusText}`);
+                }
+
+                const data = await response.json();
+                console.log('Fetched data:', data);
+
+                updateHTML(data);
+            } catch (error) {
+                console.error('Error during fetch:', error);
+            }
+        });
+
+        //function updateHTML(data) {
+        //    console.log('Starting HTML update...');
+
+        //    const container = document.getElementById('resultsContainer');
+        //    if (!container) {
+        //        console.error('Error: resultsContainer element not found in the DOM.');
+        //        return;
+        //    }
+
+        //    console.log('Clearing previous HTML content...');
+        //    container.innerHTML = ''; // Clear any previous content
+
+        //    data.forEach((item, index) => {
+        //        console.log(`Processing item #${index + 1}:`, item);
+
+        //        const card = `
+        //            <div class="recipe-card">
+        //                <h3>${item.name}</h3>
+        //                <p>${item.description}</p>
+        //                <p>Preparation Time: ${item.preparationTime} minutes</p>
+        //                <p>Cooking Difficulty: ${item.cookingDifficulty}</p>
+        //            </div>
+        //        `;
+
+        //        console.log(`Generated HTML for item #${index + 1}:`, card);
+        //        container.innerHTML += card;
+        //    });
+
+        //    console.log('HTML update complete. Current container content:', container.innerHTML);
+        //}
+        function updateHTML(data) {
+            console.log('Starting HTML update...');
+
+            const categoryMapping = {
+                1: 'trending',
+                2: 'new',
+                3: 'popular',
+                4: 'recommended',
+                5: 'saved'
+            };
+
+            const processedCategories = new Set();
+
+            data.forEach((item, index) => {
+                console.log(`Processing item #${index + 1}:`, item);
+
+                const category = categoryMapping[item.category];
+
+                if (category) {
+                    if (!processedCategories.has(category)) {
+                        const categoryGrid = document.querySelector(`.recipe-grid[data-category="${category}"]`);
+
+                        if (categoryGrid) {
+                            console.log(`Found category grid for category: ${category}`);
+
+                            categoryGrid.innerHTML = ''; // Clear any previous content
+
+                            processedCategories.add(category);
+                        } else {
+                            console.error(`Category grid not found for category: ${category}`);
+                        }
+                    }
+
+                    const card = `
+                <div class="recipe-card">
+                    <a href="home.html">
+                        <img src="/Data/Food%20Images/Food%20Images/${item.imageName}.jpg" alt="${item.name}" />
+                    </a>
+                    <div class="recipe-info">
+                        <div>
+                            <h3 style="min-height: 50px; line-height: 25px;">${item.name}</h3>
+                        </div>
+                        <p>Preparation Time: ${item.preparationTime} minutes</p>
+                        <p>Cooking Difficulty: ${item.cookingDifficulty}</p>
+                    </div>
+                </div>
+            `;
+
+                    console.log(`Generated HTML for item #${index + 1}:`, card);
+
+                    const categoryGrid = document.querySelector(`.recipe-grid[data-category="${category}"]`);
+                    if (categoryGrid) {
+                        categoryGrid.innerHTML += card;
+                    }
+                } else {
+                    console.error(`Invalid category: ${item.category}`);
+                }
+            });
+
+            console.log('HTML update complete.');
+        }
+    </script>
 <!-- Footer -->
 <footer>
   <div class="footer-container">

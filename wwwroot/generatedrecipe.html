@@ -18,17 +18,12 @@
 }
 
 .recipe-image {
-  flex: 1;
-  background-color: #ddd;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 10px;
-}
-
-.recipe-image span {
-  font-size: 18px;
-  color: #555;
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+    overflow: hidden;
 }
 
 .recipe-details {
@@ -91,85 +86,180 @@
     <h1>Recipes</h1>
   </center>
   <body>
-    <div class="recipe-container">
-        <div class="recipe-image">
-            <span>Placeholder for Image</span>
+      <div class="recipe-container">
+          <!-- this is the tempalte for the recipe-Container-->
+          <!--<div class="recipe-image">
+              <span>Placeholder for Image</span>
+          </div>
+          <div class="recipe-details">
+              <h1>Fried Chicken</h1>
+              <div class="meta">
+                  <span>🕒 45 Minutes</span>
+                  <span>🔥 375 Cal</span>
+              </div>
+              <div class="ingredients">
+                  <h2>Ingredients</h2>
+                  <ul>
+                      <li>Chicken breast</li>
+                      <li>Chili Powder (optional)</li>
+                      <li>Margarine</li>
+                      <li>Soy Sauce</li>
+                  </ul>
+              </div>
+              <div class="preparation">
+                  <h2>Preparation</h2>
+                  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                  <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+              </div>
+
+              <div>
+                  <h3 id="selected-cuisines">Cuisines: </h3>
+                  <h3 id="selected-meal-type">Meal Type: </h3>
+                  <h3 id="selected-difficulty">Difficulty: </h3>
+                  <h3 id="selected-prep-time">Prep Time: </h3>
+                  <h3 id="selected-products">Ingredients: </h3>
+              </div>
+          </div>-->
+      </div>
+      <script>
+          // Function to get query parameters from the URL
+          function getQueryParams() {
+              const params = new URLSearchParams(window.location.search);
+              return {
+                  cuisines: params.get('cuisines') ? params.get('cuisines').split(',') : [],
+                  mealType: params.get('mealType') ? params.get('mealType').split(',') : [],
+                  difficulty: params.get('difficulty') ? params.get('difficulty').split(',') : [],
+                  prepTime: params.get('prepTime') ? params.get('prepTime').split(',') : [],
+                  products: params.get('products') ? params.get('products').split(',') : []
+              };
+          }
+
+          // Function to fetch generated recipes from the API
+          async function fetchGeneratedRecipes(params) {
+              const queryString = new URLSearchParams({
+                  cuisineType: params.cuisines[0] || '', // Use first cuisine type from the query
+                  mealType: params.mealType.join(',') || '',
+                  cookingDifficulty: params.difficulty.join(',') || '',
+                  preparationTime: params.prepTime.join(',') || '',
+                  keywords: params.products.join(',') || ''
+              });
+
+              try {
+                  const response = await fetch(`/api/ChefRecipes/GenerateRecipes?${queryString.toString()}`);
+                  if (response.ok) {
+                      const data = await response.json();
+                      console.log("Fetched Recipes:", data);
+
+                      // Display the first 5 recipes
+                      displayRecipes(data);
+                  } else {
+                      console.error('Error fetching recipes:', response.statusText);
+                  }
+              } catch (error) {
+                  console.error('Error during API call:', error);
+              }
+          }
+
+          // Function to shuffle an array
+          function shuffleArray(array) {
+              for (let i = array.length - 1; i > 0; i--) {
+                  const j = Math.floor(Math.random() * (i + 1));
+                  [array[i], array[j]] = [array[j], array[i]]; // Swap elements
+              }
+          }
+
+          // Function to display 5 random recipes
+          function displayRecipes(recipes) {
+              const recipeContainer = document.querySelector('.recipe-container');
+              recipeContainer.innerHTML = ''; // Clear any previous recipes
+
+              // Shuffle the recipes array and select the first 5 recipes
+              shuffleArray(recipes);
+              const selectedRecipes = recipes.slice(0, 5);
+
+              // Loop through the selected 5 recipes
+              selectedRecipes.forEach(recipe => {
+                  const recipeElement = document.createElement('div');
+                  recipeElement.classList.add('recipe-item');
+
+                  // Safely handle the description to extract ingredients
+                  let ingredients = [];
+                  try {
+                      // Attempt to parse the description if it's in a valid JSON format
+                      ingredients = JSON.parse(recipe.description);
+                  } catch (e) {
+                      // If parsing fails, split the description manually (assuming it's comma-separated)
+                      ingredients = recipe.description.replace(/[\[\]'"]/g, '').split(',').map(ingredient => ingredient.trim());
+                  }
+
+                  // Render the recipe
+                  recipeElement.innerHTML = `
+        <div class="recipe-container">
+            <div class="recipe-image" style="border-radius: 5px; display: inline-block; background: none">
+                <span>
+                    <img src="/Data/Food%20Images/Food%20Images/${recipe.imageName}.jpg" alt="${recipe.name}" 
+                         style="width: 60%; height: auto; border-radius: 5px; border: 10px solid gray; border"/>
+                </span>
+            </div>
+
+            <div class="recipe-details">
+                <h1>${recipe.name}</h1>
+                <div class="meta">
+                    <span>🕒 ${recipe.preparationTime} Minutes</span>
+                </div>
+                <div class="ingredients">
+                    <h2>Ingredients</h2>
+                    <ul>
+                        ${ingredients.map(ingredient => `<li>${ingredient}</li>`).join('')}
+                    </ul>
+                </div>
+                <div class="preparation">
+                    <h2>Preparation</h2>
+                    <p>${recipe.preparation}</p>
+                </div>
+
+                <div>
+                    <h3>Cuisines: ${recipe.cuisineType}</h3>
+                    <h3>Meal Type: ${recipe.mealType}</h3>
+                    <h3>Difficulty: ${recipe.cookingDifficulty}</h3>
+                </div>
+            </div>
         </div>
-        <div class="recipe-details">
-            <h1>Fried Chicken</h1>
-            <div class="meta">
-                <span>🕒 45 Minutes</span>
-                <span>🔥 375 Cal</span>
-            </div>
-            <div class="ingredients">
-                <h2>Ingredients</h2>
-                <ul>
-                    <li>Chicken breast</li>
-                    <li>Chili Powder (optional)</li>
-                    <li>Margarine</li>
-                    <li>Soy Sauce</li>
-                </ul>
-            </div>
-            <div class="preparation">
-                <h2>Preparation</h2>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-                <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-            </div>
-        </div>
-
-        <script>
-            //document.addEventListener('DOMContentLoaded', () => {
-            //    const queryParams = new URLSearchParams(window.location.search);
-
-            //    const cuisines = queryParams.get('cuisines')?.split(',') || [];
-            //    const mealType = queryParams.get('mealType')?.split(',') || [];
-            //    const difficulty = queryParams.get('difficulty')?.split(',') || [];
-            //    const prepTime = queryParams.get('prepTime')?.split(',') || [];
-            //    const ingredients = queryParams.get('ingredients')?.split(',') || [];
-
-            //    console.log('Cuisines:', cuisines);
-            //    console.log('Meal Type:', mealType);
-            //    console.log('Difficulty:', difficulty);
-            //    console.log('Prep Time:', prepTime);
-            //    console.log('Ingredients:', ingredients);
-
-            //const params = new URLSearchParams(window.location.search);
-            //const cuisineType = params.get("cuisineType");
-            //const mealType = params.get("mealType");
-            //const cookingDifficulty = params.get("cookingDifficulty");
-            //const preparationTime = params.get("preparationTime");
-            //const ingredients = params.get("ingredients")?.split(",") || [];
-
-            //// Display or process the data
-            //console.log({ cuisineType, mealType, cookingDifficulty, preparationTime, ingredients });
+        `;
+                  recipeContainer.appendChild(recipeElement);
+              });
+          }
 
 
-        </script>
+          // Retrieve the parameters
+          const params = getQueryParams();
 
-    </div>
-  <!-- Footer -->
-  <footer>
-    <div class="footer-container">
-      <div class="footer-logo">
-        <img src="images/footerlogo.png" alt="InstaChef Logo">
-      </div>
-      <div class="footer-group">
-        <h3>Group</h3>
-        <ul>
-          <li><a href="#">About Us</a></li>
-          <li><a href="#">Contact Us</a></li>
-        </ul>
-      </div>
-      <div class="footer-contact">
-        <h3>Contact Info</h3>
-        <ul>
-          <li>Phone: 1234567890</li>
-          <li>Email: instachef@email.com</li>
-          <li>Location: Cebu IT Park</li>
-        </ul>
-      </div>
-    </div>
-  </footer>
-  
-</body>
+          // Fetch the generated recipes using the parameters
+          fetchGeneratedRecipes(params);
+      </script>
+      <!-- Footer -->
+      <footer>
+          <div class="footer-container">
+              <div class="footer-logo">
+                  <img src="images/footerlogo.png" alt="InstaChef Logo">
+              </div>
+              <div class="footer-group">
+                  <h3>Group</h3>
+                  <ul>
+                      <li><a href="#">About Us</a></li>
+                      <li><a href="#">Contact Us</a></li>
+                  </ul>
+              </div>
+              <div class="footer-contact">
+                  <h3>Contact Info</h3>
+                  <ul>
+                      <li>Phone: 1234567890</li>
+                      <li>Email: instachef@email.com</li>
+                      <li>Location: Cebu IT Park</li>
+                  </ul>
+              </div>
+          </div>
+      </footer>
+
+  </body>
 </html>

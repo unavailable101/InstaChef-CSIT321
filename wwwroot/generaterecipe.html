@@ -255,14 +255,14 @@
 
         // Handle recipe generation
         document.querySelector('.generate-btn').addEventListener('click', () => {
-            const selectedCuisines = getSelectedButtons('.cuisine-section .button.selected');
-            const selectedMealType = getSelectedButtons('.meal-type-section .button.selected');
-            const selectedDifficulty = getSelectedButtons('.difficulty-section .button.selected');
+            let selectedCuisines = getSelectedButtons('.cuisine-section .button.selected');
+            let selectedMealType = getSelectedButtons('.meal-type-section .button.selected');
+            let selectedDifficulty = getSelectedButtons('.difficulty-section .button.selected');
 
             // Convert prep time to just the number
-            const selectedPrepTime = getSelectedButtons('.prep-time-section .button.selected').map(time => time.replace(' min', ''));
+            let selectedPrepTime = getSelectedButtons('.prep-time-section .button.selected').map(time => time.replace(' min', ''));
 
-            const selectedProducts = getSelectedButtons('.product.selected');
+            let selectedProducts = getSelectedButtons('.product.selected');
 
             console.log('Selected Cuisines:', selectedCuisines);
             console.log('Selected Meal Type:', selectedMealType);
@@ -270,14 +270,40 @@
             console.log('Selected Prep Time:', selectedPrepTime);
             console.log('Selected Products:', selectedProducts);
 
-            // Example of how you would send the data for recipe generation (mockup)
+            // Check for 'None' and set to null if true
+            if (selectedCuisines.includes("None") || selectedCuisines.length === 0) {
+                selectedCuisines = null;
+            }
+
+            if (selectedMealType.includes("None") || selectedMealType.length === 0) {
+                selectedMealType = null;
+            }
+
+            if (selectedDifficulty.includes("None") || selectedDifficulty.length === 0) {
+                selectedDifficulty = null;
+            }
+
+            // If no options are selected, display a message
             const recipeMessage = document.getElementById('recipe-message');
-            if (selectedCuisines.length > 0 || selectedMealType.length > 0 || selectedDifficulty.length > 0 || selectedPrepTime.length > 0 || selectedProducts.length > 0) {
+            if (selectedCuisines || selectedMealType || selectedDifficulty || selectedPrepTime.length > 0 || selectedProducts.length > 0) {
                 recipeMessage.textContent = "Here is a recipe based on your preferences!";
+
+                // Construct the URL with query parameters
+                const queryParams = new URLSearchParams({
+                    cuisines: selectedCuisines ? selectedCuisines.join(',') : '',
+                    mealType: selectedMealType ? selectedMealType.join(',') : '',
+                    difficulty: selectedDifficulty ? selectedDifficulty.join(',') : '',
+                    prepTime: selectedPrepTime.length > 0 ? selectedPrepTime.join(',') : '',
+                    products: selectedProducts.length > 0 ? selectedProducts.join(',') : ''
+                });
+
+                // Redirect to the generated recipes page with the query parameters
+                window.location.href = `generatedrecipe.html?${queryParams.toString()}`;
             } else {
                 recipeMessage.textContent = "Please select preferences to generate a recipe.";
             }
         });
+
 
 
 

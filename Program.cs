@@ -3,6 +3,7 @@ using InstaChef.Services;
 using InstaChef;
 using Microsoft.EntityFrameworkCore;
 using InstaChef.Repositories;
+using Microsoft.Extensions.FileProviders;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -55,6 +56,13 @@ app.MapControllers(); // This maps controller routes to the appropriate actions
 // Middleware setup
 app.UseHttpsRedirection();
 app.UseStaticFiles();
+
+app.UseStaticFiles(new StaticFileOptions
+{
+    FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), "Data")),
+    RequestPath = "/Data"
+});
+
 app.UseRouting(); // Important: Before UseCors()
 app.UseCors("AllowFrontend"); // Apply CORS policy
 app.UseAuthorization();

@@ -99,7 +99,14 @@ namespace InstaChef.Repositories
             // Filter PreparationTime
             if (preparationTime.HasValue)
             {
-                query = query.Where(r => r.PreparationTime <= preparationTime);
+                if(preparationTime == 135)
+                {
+                    query = query.Where(r => true);
+
+                } else
+                {
+                    query = query.Where(r => r.PreparationTime <= preparationTime);
+                }
             }
 
             // Filter Keywords in Description
@@ -107,8 +114,11 @@ namespace InstaChef.Repositories
             {
                 foreach (var keyword in keywords)
                 {
-                    var tempKeyword = keyword.ToLower(); // Ensure case-insensitive comparison
-                    query = query.Where(r => r.Description.ToLower().Contains(tempKeyword));
+                    if (keyword != null) // Check if the keyword is not null
+                    {
+                        var tempKeyword = keyword.ToLower(); // Ensure case-insensitive comparison
+                        query = query.Where(r => r.Description != null && r.Description.ToLower().Contains(tempKeyword));
+                    }
                 }
             }
 
@@ -125,6 +135,20 @@ namespace InstaChef.Repositories
             {
                 var categoryRecipes = await _context.ChefRecipes
                     .Where(r => r.Category == category)
+                    .Select(r => new ChefRecipes
+                    {
+                        Id = r.Id,
+                        Name = r.Name,
+                        Description = r.Description,
+                        Preparation = r.Preparation,
+                        CuisineType = r.CuisineType,
+                        MealType = r.MealType,
+                        CookingDifficulty = r.CookingDifficulty,
+                        PreparationTime = r.PreparationTime,
+                        ServingCount = r.ServingCount,
+                        Category = r.Category,
+                        ImageName = r.ImageName
+                    })
                     .Take(3)
                     .ToListAsync();
 
